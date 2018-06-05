@@ -38,12 +38,41 @@ for value in header_dict['n_guns_involved']:
         number_of_guns += int(value)
 
 #bepaal totaal aantal gestolen wapens
-number_of_guns_stolen = 0
-for value in header_dict['gun_stolen']:
-    if 'Unknown' in value:
-        print("hello")
-    if len(list(value)) < 2:
-        number_of_guns_stolen += int(value)
+# number_of_guns_stolen = 0
+# for value in header_dict['gun_stolen']:
+#     if 'Unknown' in value:
+#     if len(list(value)) < 2:
+#         number_of_guns_stolen += int(value)
+
+# maakt dictionary met aantal doden per jaar
+year_dict = {}
+for i in range(len(header_dict['date'])):
+    if header_dict['date'][i][0:4] in year_dict:
+        year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
+    else:
+        year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
+
+# maakt dictionary met aantal doden per state
+state_dict = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in state_dict:
+        state_dict[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+        state_dict[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+
+# maakt dictionary met aantal doden per city/county
+city_or_county_dict = {}
+for i in range(len(header_dict['city_or_county'])):
+    lengte = int(len(header_dict['city_or_county'][i]))
+    # countys vinden
+    # if header_dict['city_or_county'][i][lengte - 8:lengte] == '(county)':
+    #     print(header_dict['city_or_county'][i], "is a county")
+
+    if header_dict['city_or_county'][i] in city_or_county_dict:
+        city_or_county_dict[header_dict['city_or_county'][i]] += int(header_dict['n_killed'][i])
+    else:
+        city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
+
 
 
 
