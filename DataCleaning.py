@@ -72,7 +72,3 @@ for i in range(len(header_dict['city_or_county'])):
         city_or_county_dict[header_dict['city_or_county'][i]] += int(header_dict['n_killed'][i])
     else:
         city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
-
-
-
-
