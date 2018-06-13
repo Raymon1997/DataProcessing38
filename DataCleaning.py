@@ -11,7 +11,7 @@ ifile  = open('stage3.csv', "r")
 read = csv.reader(ifile)
 headers = next(read)
 row_list.append(headers)
-for i in range(500):
+for i in range(239677):
     row_list.append(next(read))
 
 # Veranderd missende data in NA
@@ -19,6 +19,7 @@ for row in row_list:
     for i in range(len(row)):
         if row[i] == '':
             row[i] = 'NA'
+
 
 # Exporteer aangepaste data naar output.csv
 writer = csv.writer(open('output.csv', 'w'))
@@ -32,11 +33,14 @@ for header in headers:
     index += 1
 
 # Bepaal hoeveel totaal aantal wapens
+guns_used_list = []
 number_of_guns = 0
 for value in header_dict['n_guns_involved']:
     if value != 'NA':
+        guns_used_list.append(value)
         number_of_guns += int(value)
-
+average_used = number_of_guns/len(guns_used_list)
+print(average_used)
 #bepaal totaal aantal gestolen wapens
 # number_of_guns_stolen = 0
 # for value in header_dict['gun_stolen']:
@@ -48,17 +52,23 @@ for value in header_dict['n_guns_involved']:
 year_dict = {}
 for i in range(len(header_dict['date'])):
     if header_dict['date'][i][0:4] in year_dict:
-        year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
+        if header_dict['n_guns_involved'][i] == 'NA':
+            year_dict[header_dict['date'][i][0:4]] += 1
+        else:
+            year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_guns_involved'][i])
     else:
-        year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
-
+        if header_dict['n_guns_involved'][i] == 'NA':
+            year_dict[header_dict['date'][i][0:4]] = 1
+        else:
+            year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_guns_involved'][i])
+print(year_dict)
 # maakt dictionary met aantal doden per state
 state_dict = {}
 for i in range(len(header_dict['state'])):
     if header_dict['state'][i] in state_dict:
-        state_dict[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+        state_dict[header_dict['state'][i]] += int(header_dict['n_injured'][i])
     else:
-        state_dict[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+        state_dict[header_dict['state'][i]] = int(header_dict['n_injured'][i])
 
 # maakt dictionary met aantal doden per city/county
 city_or_county_dict = {}
