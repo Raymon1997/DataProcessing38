@@ -48,7 +48,7 @@ print(average_used)
 #     if len(list(value)) < 2:
 #         number_of_guns_stolen += int(value)
 
-# maakt dictionary met aantal doden per jaar
+# maakt dictionary met aantal gebruikte per jaar
 year_dict = {}
 for i in range(len(header_dict['date'])):
     if header_dict['date'][i][0:4] in year_dict:
@@ -61,15 +61,16 @@ for i in range(len(header_dict['date'])):
             year_dict[header_dict['date'][i][0:4]] = 1
         else:
             year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_guns_involved'][i])
-print(year_dict)
+
 # maakt dictionary met aantal doden per state
 state_dict = {}
 for i in range(len(header_dict['state'])):
-    if header_dict['state'][i] in state_dict:
-        state_dict[header_dict['state'][i]] += int(header_dict['n_injured'][i])
-    else:
-        state_dict[header_dict['state'][i]] = int(header_dict['n_injured'][i])
-
+    while header_dict['date'][i][0:4] == '2013':
+        if header_dict['state'][i] in state_dict:
+            state_dict[header_dict['state'][i]] += int(header_dict['n_injured'][i])
+        else:
+            state_dict[header_dict['state'][i]] = int(header_dict['n_injured'][i])
+print(state_dict)
 # maakt dictionary met aantal doden per city/county
 city_or_county_dict = {}
 for i in range(len(header_dict['city_or_county'])):
