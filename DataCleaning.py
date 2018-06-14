@@ -1,6 +1,9 @@
 import csv
 import pandas
 import sys
+import bokeh
+
+
 
 header_dict = {}
 index = 0
@@ -51,6 +54,7 @@ for i in range(len(header_dict['date'])):
         year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
     else:
         year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
+print(year_dict)
 
 # maakt dictionary met aantal doden per state
 state_dict = {}
@@ -72,3 +76,35 @@ for i in range(len(header_dict['city_or_county'])):
         city_or_county_dict[header_dict['city_or_county'][i]] += int(header_dict['n_killed'][i])
     else:
         city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
+
+
+
+# maakt dictionary met latitudes
+latitudes_per_case = []
+for value in header_dict['latitude']:
+    for i in range(1, len(header_dict['latitudes'])):
+        column[i].append(latitudes_per_case)
+    index += 1
+
+# maakt dictionary met longitudes
+longitudes_per_case = []
+for value in header_dict['longitude']:
+    for i in range(1, len(header_dict['longitudes'])):
+        column[i].append(longitudes_per_case)
+    index += 1
+print(longitudes_per_case)
+    
+# opzet code scatterplot over grafiek
+from bokeh.io import show, output_file
+from bokeh.plotting import gmap
+from bokeh.model import ColumnDataSource, GMapOptions
+
+# columns needed
+source = ColumnDataSource(latitudes_per_case, longitudes_per_case)
+output_file("amount_of_murders_on_map.html")
+
+# specifiy map
+map_options = GMapOptions(lat=24.0469, lng=-130.2559, map_type ="roadmap", zoom=1000)
+p = gmap("<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>", map_options, title = "USA")
+source = ColumnDatasource(latitude, longitude)
+p.circle()
