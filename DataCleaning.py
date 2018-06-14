@@ -55,7 +55,7 @@ for i in range(239677):
     del row_list[i+1][18]
     del row_list[i+1][16]
     del row_list[i+1][12]
-    del row_list[i+1][8]
+    del row_list[i+1][8]s
 
 # Veranderd missende data in NA
 for row in row_list:
