@@ -64,17 +64,17 @@ for row in row_list:
             row[i] = 'NA'
 
 
-for i in range(len(row_list)):
-    if i == 0:
-        continue
-    else:
-        lat = row_list[i][8]
-        lon = row_list[i][9]
-        if lat != 'NA' and lon != 'NA':
-            new_address = reverse_geocoder(lat, lon)
-            while new_address == False:
-                new_address = reverse_geocoder(lat, lon)
-            row_list[i][4] = new_address
+#for i in range(len(row_list)):
+#    if i == 0:
+#        continue
+#    else:
+#        lat = row_list[i][8]
+#        lon = row_list[i][9]
+#        if lat != 'NA' and lon != 'NA':
+#            new_address = reverse_geocoder(lat, lon)
+#            while new_address == False:
+#                new_address = reverse_geocoder(lat, lon)
+#            row_list[i][4] = new_address
 
 
 
@@ -109,16 +109,24 @@ print(average_used)
 # maakt dictionary met aantal guns involved
 year_dict = {}
 for i in range(len(header_dict['date'])):
-    if header_dict['date'][i][0:4] in year_dict:
+    if header_dict['date'][i][5:7] in year_dict:
         if header_dict['n_guns_involved'][i] == 'NA':
-            year_dict[header_dict['date'][i][0:4]] += 1
+            year_dict[header_dict['date'][i][5:7]] += 1
         else:
-            year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_guns_involved'][i])
+            year_dict[header_dict['date'][i][5:7]] += int(header_dict['n_guns_involved'][i])
     else:
         if header_dict['n_guns_involved'][i] == 'NA':
-            year_dict[header_dict['date'][i][0:4]] = 1
+            year_dict[header_dict['date'][i][5:7]] = 1
         else:
-            year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_guns_involved'][i])
+            year_dict[header_dict['date'][i][5:7]] = int(header_dict['n_guns_involved'][i])
+
+
+year_dict = {}
+for i in range(len(header_dict['date'])):
+    if header_dict['date'][i][5:7] in year_dict:
+        year_dict[header_dict['date'][i][5:7]] += int(header_dict['n_killed'][i])
+    else:
+        year_dict[header_dict['date'][i][5:7]] = int(header_dict['n_killed'][i])
 print(year_dict)
 # maakt dictionary met aantal doden per state
 state_dict = {}
