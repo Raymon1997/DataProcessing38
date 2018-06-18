@@ -133,9 +133,12 @@ import numpy as np
 from bokeh.plotting import figure, output_file, show
 
 dates = []
+killed = []
 for key in year_dict.keys():
-    dates.append(key)
-killed = np.array(year_dict.values())
+    dates.append(np.datetime64(key))
+for value in year_dict.values():
+    killed.append(value)
+
 
 window_size = 30
 window = np.ones(window_size)/float(window_size)
@@ -148,8 +151,8 @@ output_file("killed.html", title="normal graph")
 p = figure(width=800, height=350, x_axis_type="datetime")
 
 # add renderers
-p.circle(dates, killed, size=4, color='darkgrey', alpha=0.2, legend='close')
-p.line(dates, killed, color='navy', legend='avg')
+p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='killed by case')
+p.line(dates, killed, color='navy', legend='killed', line_width=0.4)
 
 # NEW: customize by setting attributes
 p.title.text = "People killed by date"
