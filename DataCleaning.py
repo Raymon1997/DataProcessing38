@@ -136,7 +136,7 @@ dates = []
 killed = []
 for key in year_dict.keys():
     dates.append(np.datetime64(key))
-for value in year_dict.value():
+for value in year_dict.values():
     killed.append(value)
 
 
@@ -152,7 +152,7 @@ p = figure(width=800, height=350, x_axis_type="datetime")
 
 # add renderers
 p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
-p.line(dates, killed, color='navy', legend='avg', linewidth=0.4)
+p.line(dates, killed, color='navy', legend='avg', line_width=0.4)
 
 # NEW: customize by setting attributes
 p.title.text = "People killed by date"
