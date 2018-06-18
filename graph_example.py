@@ -3,11 +3,11 @@ import numpy as np
 
 from bokeh.plotting import figure, output_file, show
 
-dates = []
+datelist = []
 for key in year_dict.keys():
-    dates.append(key)
+    datelist.append(key)
 killed = np.array(year_dict.values())
-
+dates = np.array(datelist, dtype = datetime64
 window_size = 30
 window = np.ones(window_size)/float(window_size)
 
