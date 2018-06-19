@@ -25,3 +25,6 @@ columns = [
 data_table = DataTable(source=source, columns=columns, width=400, height=280)
 
 show(widgetbox(data_table))
+
+print(longitudes_per_case)
+print(latitudes_per_case)
