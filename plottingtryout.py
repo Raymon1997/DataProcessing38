@@ -1,7 +1,8 @@
 from bokeh.io import show, output_file
 from bokeh.models import FactorRange
 from bokeh.plotting import figure
-import pandas
+import pandas as pd
+import numpy as np
 
 
 #colnames = ['date', 'state', 'city_or_county', 'address', 'n_killed', 'n_injured', 'congressional_district', 'gun_stolen', 'latitude', 'longitude', 'n_guns_involved', 'participant_age_group', 'participant_gender', 'participant_relationship', 'participant_type', 'state_house_district', 'state_senate_district' ]
@@ -36,4 +37,29 @@ p.x_range.range_padding = 0.1
 p.xaxis.major_label_orientation = 1
 p.xgrid.grid_line_color = None
 
-show(p)
+#show(p)
+
+
+# Read the data from a csv into a dataframe
+crime = pd.read_csv('output.csv', index_col=0)
+
+# Summary stats for the column of interest
+print(crime['n_killed'].describe())
+
+
+arr_hist, edges = np.histogram(crime['n_killed'],
+                               bins = int(365/7),
+                               range = [-60, 120])
+
+# Put the information in a dataframe
+kills = pd.DataFrame({'n_killed': arr_hist,
+                       'left': edges[:-1],
+                       'right': edges[1:]})
+
+print(kills)
+#p.quad(bottom=0, top=kills['crime'],
+#       left=kills['left'], right=kills['right'],
+#       fill_color='red', line_color='black')
+
+# Show the plot
+#show(p)
