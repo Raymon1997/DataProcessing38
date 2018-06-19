@@ -56,6 +56,15 @@ kills = pd.DataFrame({'n_killed': arr_hist,
                        'left': edges[:-1],
                        'right': edges[1:]})
 
+p.title.text = "People killed in every month"
+p.legend.location = "top_left"
+p.grid.grid_line_alpha = 0
+p.xaxis.axis_label = 'month'
+p.yaxis.axis_label = 'Total Killed'
+p.ygrid.band_fill_color = "olive"
+p.ygrid.band_fill_alpha = 0.1
+
+
 print(kills)
 #p.quad(bottom=0, top=kills['crime'],
 #       left=kills['left'], right=kills['right'],

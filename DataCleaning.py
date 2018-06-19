@@ -123,10 +123,10 @@ print(average_used)
 
 year_dict = {}
 for i in range(len(header_dict['date'])):
-    if header_dict['date'][i] in year_dict:
-        year_dict[header_dict['date'][i]] += int(header_dict['n_killed'][i])
+    if header_dict['date'][i][0:7] in year_dict:
+        year_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
     else:
-        year_dict[header_dict['date'][i]] = int(header_dict['n_killed'][i])
+        year_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
 
 import numpy as np
 
@@ -155,7 +155,7 @@ p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
 p.line(dates, killed, color='navy', legend='avg', line_width=0.4)
 
 # NEW: customize by setting attributes
-p.title.text = "People killed by date"
+p.title.text = "People killed by month"
 p.legend.location = "top_left"
 p.grid.grid_line_alpha = 0
 p.xaxis.axis_label = 'Date'

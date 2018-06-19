@@ -2,6 +2,7 @@ import csv
 import pandas
 import sys
 import bokeh
+import numpy
 
 
 
@@ -10,7 +11,7 @@ index = 0
 row_list = []
 
 # Inladen eerste 500 rows van dataset
-ifile  = open('stage3.csv', "r")
+ifile  = open('output.csv', "r")
 read = csv.reader(ifile)
 headers = next(read)
 row_list.append(headers)
@@ -35,32 +36,62 @@ for header in headers:
     index += 1
 
     
+# maakt lijst met latitudes
+latitudes_per_case_str = []
+for i in range(len(header_dict['latitude'])):
+    if i == 'NA':
+        del(i)
+    else:
+        latitudes_per_case_str.append(header_dict['latitude'][i])        
+index += 1
+latitudes_per_case = []
+for i in latitudes_per_case_str:
+    latitudes_per_case.append(float(i))
+print(latitudes_per_case)
+
+
+# maakt lijst met longitudes
+longitudes_per_case_str = []
+for i in range(len(header_dict['longitude'])):
+    if i == 'NA':
+        del(i)
+    else:
+        latitudes_per_case_str.append(header_dict['latitude'][i])
+index += 1
+longitudes_per_case = []
+for i in longitudes_per_case_str:
+    longitudes_per_case.append(float(i))
+print(longitudes_per_case)
+# maak er nog een float van
+
 # importing necessary libraries
 from bokeh.plotting import figure, show, output_file
 from bokeh.sampledata.us_states import data as states
+from bokeh.models import ColumnDataSource, ColumnarDataSource
+
+del states["HI"]
+del states["AK"]
+
+# convert into columndatasource
+source = ColumnDataSource(data = dict(lon= longitudes_per_case,
+            lat=latitudes_per_case))
 
 
-# maakt dictionary met latitudes
-latitudes_per_case = {}
-for value in header_dict['latitude']:
-    for i in range(len(header_dict['latitudes'])):
-        value.append(latitudes_per_case)
-    index += 1
-
-# maakt dictionary met longitudes
-longitudes_per_case = {}
-for value in header_dict['longitude']:
-    for i in range(len(header_dict['longitudes'])):
-        value.append(longitudes_per_case)
-    index += 1
+state_xs = [states[code]["lons"] for code in states]
+state_ys = [states[code]["lats"] for code in states]
 
 
-state_xs = longitudes_per_case
-state_ys = latitudes_per_case
+colors = ["#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043"]
 
-p = figure(title = "Muders on map", toolbar_location = "left",
- plot_width = 1000, plot_height = 1000)
-p.circle(x=state_xs, y=state_ys)
+
+# Make figure
+p = figure(title = "Muders on map", toolbar_location = "right",
+ plot_width = 1500, plot_height = 1000)
+# Draw state lines
+p.patches(state_xs, state_ys, fill_alpha=0.0,
+    line_color="#884444", line_width=1.5)
+# Create scatterplot
+p.circle(x='lon', y='lat', size = 8, fill_alpha=1, fill_color = "blue", source = source)
 
 output_file("murdersonmap.html")
 
