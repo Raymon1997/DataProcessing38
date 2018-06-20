@@ -123,53 +123,10 @@ print(average_used)
 
 year_dict = {}
 for i in range(len(header_dict['date'])):
-    if header_dict['date'][i][0:7] in year_dict:
-        year_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
+    if header_dict['date'][i][0:4] in year_dict:
+        year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
     else:
-        year_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
-
-import numpy as np
-
-from bokeh.plotting import figure, output_file, show
-
-dates = []
-killed = []
-for key in year_dict.keys():
-    dates.append(np.datetime64(key))
-for value in year_dict.values():
-    killed.append(value)
-
-
-window_size = 30
-window = np.ones(window_size)/float(window_size)
-
-
-# output to static HTML file
-output_file("killed.html", title="normal graph")
-
-# create a new plot with a a datetime axis type
-p = figure(width=800, height=350, x_axis_type="datetime")
-
-# add renderers
-p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
-p.line(dates, killed, color='navy', legend='avg', line_width=0.4)
-
-# NEW: customize by setting attributes
-p.title.text = "People killed by month"
-p.legend.location = "top_left"
-p.grid.grid_line_alpha = 0
-p.xaxis.axis_label = 'Date'
-p.yaxis.axis_label = 'Killed'
-p.ygrid.band_fill_color = "olive"
-p.ygrid.band_fill_alpha = 0.1
-
-# show the results
-show(p)
-
-
-
-
-
+        year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
 
 # maakt dictionary met aantal doden per state
 

@@ -84,12 +84,12 @@ for i in range(len(header_dict['participant_relationship'])):
         if header_dict['date'][i][0:4] in family_dict:
             family_dict[header_dict['date'][i][0:4]] += 1
         else:
-            family_dict[header_dict['date'][i][0:4]] = 1  
+            family_dict[header_dict['date'][i][0:4]] = 1
     if 'Gang vs Gang' in header_dict['participant_relationship'][i]:
             if header_dict['date'][i][0:4] in gang_dict:
                 gang_dict[header_dict['date'][i][0:4]] += 1
             else:
-                gang_dict[header_dict['date'][i][0:4]] = 1  
+                gang_dict[header_dict['date'][i][0:4]] = 1
 
 print(family_dict)
 print(gang_dict)

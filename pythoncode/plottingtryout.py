@@ -21,18 +21,19 @@ factors = [
     ]
 
 
-p = figure(x_range=FactorRange(*factors), plot_height=250,
+p = figure(height= 350, x_range=FactorRange(*factors),
            toolbar_location=None, tools="")
 y1 = (6035 + 4945 + 5641)/3
 y2 = (4383 + 4830 + 4886)/3
 y3 = (5275 + 5127 + 4770)/3
 y4 = (4791 + 4848 + 4927)/3
 x = [ 6035, 4945, 5641, 4383, 4830, 4886, 5275, 5127, 4770, 4791, 4848, 4927 ]
-p.vbar(x=factors, top=x, width=0.9, alpha=0.5)
+p.vbar(x=factors, top=x, width=0.9, alpha=0.5, legend='total killed per month')
 
-p.line(x=["Q1", "Q2", "Q3", "Q4"], y=[y1, y2, y3, y4], color="red", line_width=2)
+p.circle(x=["Q1", "Q2", "Q3", "Q4"], y=[y1, y2, y3, y4], color="red", line_width=2, legend='average killed by quadrant ')
 
 p.y_range.start = 0
+p.y_range.end = 9000
 p.x_range.range_padding = 0.1
 p.xaxis.major_label_orientation = 1
 p.xgrid.grid_line_color = None
@@ -58,17 +59,9 @@ kills = pd.DataFrame({'n_killed': arr_hist,
 
 p.title.text = "People killed in every month"
 p.legend.location = "top_left"
+p.legend.background_fill_alpha = 0.8
 p.grid.grid_line_alpha = 0
 p.xaxis.axis_label = 'month'
 p.yaxis.axis_label = 'Total Killed'
-p.ygrid.band_fill_color = "olive"
-p.ygrid.band_fill_alpha = 0.1
 
-
-print(kills)
-#p.quad(bottom=0, top=kills['crime'],
-#       left=kills['left'], right=kills['right'],
-#       fill_color='red', line_color='black')
-
-# Show the plot
-#show(p)
+show(p)
