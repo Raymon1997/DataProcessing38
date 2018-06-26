@@ -4,12 +4,13 @@ import sys
 import bokeh
 import numpy
 
-import k
-
 from bokeh.plotting import figure, show, output_file
 from bokeh.models import LogColorMapper, LogTicker, ColorBar, HoverTool, ColumnDataSource, ColumnarDataSource, LinearColorMapper, Plot, Range1d, BasicTickFormatter, LinearAxis, LogTicker, FixedTicker, FuncTickFormatter
 from bokeh.io import show
 from bokeh.palettes import Viridis6 as palette
+
+from bokeh.models import LogColorMapper, LogTicker, ColorBar
+from bokeh.models import ColorBar, LinearColorMapper, Plot, Range1d, BasicTickFormatter, LinearAxis, LogTicker, FixedTicker, FuncTickFormatter
 
 from bokeh.sampledata.us_states import data as states
 from bokeh.sampledata.us_counties import data as counties
@@ -20,7 +21,7 @@ index = 0
 row_list = []
 
 # Inladen eerste 500 rows van dataset
-ifile  = open('output.csv', "r")
+ifile  = open('stage3.csv', "r")
 read = csv.reader(ifile)
 headers = next(read)
 row_list.append(headers)
@@ -44,9 +45,6 @@ for header in headers:
         header_dict[header].append(row_list[i][index])
     index += 1
 
-state = 'taxas'
-k.County_Geo_Map(header_dict, state)
-
 latitudes_per_case = []
 longitudes_per_case = []
 for i in range(len(header_dict['latitude'])):
@@ -62,7 +60,6 @@ for i in range(len(header_dict['state'])):
         state_dict[header_dict['state'][i]] += 1
     else:
         state_dict[header_dict['state'][i]] = 1
-# maak er nog een float van
 
 del states["HI"]
 del states["AK"]
@@ -70,12 +67,12 @@ del states["AK"]
 EXCLUDED = ("ak", "hi", "pr", "gu", "vi", "mp", "as")
 
 # convert into columndatasource
-source = ColumnDataSource(data = dict(lon= longitudes_per_case, lat=latitudes_per_case))
+src = ColumnDataSource(data = dict(lon= longitudes_per_case, lat=latitudes_per_case))
 
 state_xs = [states[code]["lons"] for code in states]
 state_ys = [states[code]["lats"] for code in states]
-
-
+county_xs=[counties[code]["lons"] for code in counties if counties[code]["state"] not in EXCLUDED]
+county_ys=[counties[code]["lats"] for code in counties if counties[code]["state"] not in EXCLUDED]
 
 colors = list(reversed([
             '#440154', '#440255', '#440357', '#450558', '#45065A', '#45085B', '#46095C', '#460B5E', '#460C5F', '#460E61', '#470F62', '#471163',
@@ -111,21 +108,70 @@ for state_id in states:
     except KeyError:
         state_colors.append("black")
 
+incidents = ["amount killed", "amount injured"]
 
+# lijst maken voor killed en injured per case
+n_killed = []
+n_injured = []
+for i in range(len(header_dict['n_killed'])):
+    if header_dict['longitude'][i] == 'NA' or header_dict['latitude'][i] == 'NA' or float(header_dict['longitude'][i]) < -140 or float(header_dict['longitude'][i]) > 0 or float(header_dict['latitude'][i]) > 50:
+        continue
+    else:
+        n_killed.append(header_dict['n_killed'][i])
+        n_injured.append(header_dict['n_injured'][i])
 
+incident_date = []
+for i in range(len(header_dict['date'])):
+    if header_dict['longitude'][i] == 'NA' or header_dict['latitude'][i] == 'NA' or float(header_dict['longitude'][i]) < -140 or float(header_dict['longitude'][i]) > 0 or float(header_dict['latitude'][i]) > 50:
+        continue
+    else:
+        incident_date.append(header_dict['date'][i])
 
-# Make figure
-p = figure(title = "Muders on map", toolbar_location = "right", plot_width = 1200, plot_height = 800)
-# Draw state lines
+state = []
+for i in range(len(header_dict['state'])):
+    if header_dict['longitude'][i] == 'NA' or header_dict['latitude'][i] == 'NA' or float(header_dict['longitude'][i]) < -140 or float(header_dict['longitude'][i]) > 0 or float(header_dict['latitude'][i]) > 50:
+        continue
+    else:
+        state.append(header_dict['state'][i])
+
+city_or_county = []
+for i in range(len(header_dict['city_or_county'])):
+    if header_dict['longitude'][i] == 'NA' or header_dict['latitude'][i] == 'NA' or float(header_dict['longitude'][i]) < -140 or float(header_dict['longitude'][i]) > 0 or float(header_dict['latitude'][i]) > 50:
+        continue
+    else:
+        city_or_county.append(header_dict['city_or_county'][i])
+
+address = []
+for i in range(len(header_dict['address'])):
+    if header_dict['longitude'][i] == 'NA' or header_dict['latitude'][i] == 'NA' or float(header_dict['longitude'][i]) < -140 or float(header_dict['longitude'][i]) > 0 or float(header_dict['latitude'][i]) > 50:
+        continue
+    else:
+        address.append(header_dict['address'][i])
+
+data =  {
+    'incident_date' : incident_date,
+    'n_killed' : n_killed,
+    'n_injured' : n_injured,
+    'address' : address,
+    'city_or_county' : city_or_county,
+    'state' : state,
+    'lon' : longitudes_per_case,
+    'lat' : latitudes_per_case
+    }
+
+df = pandas.read_csv('stage3.csv')
+source = ColumnDataSource(data=data)
+
+p = figure(title = "Gun Violance in the US 2013 - 2018", toolbar_location = "right", plot_width = 1200, plot_height = 800, tools = "hover, wheel_zoom, reset, box_zoom")
+hover = p.select(dict(type=HoverTool))
+hover.names=["foo"]
+hover.tooltips=[("Date", "@incident_date"), ("State", "@state"), ("City/County", "@city_or_county"), ("Address", "@address"), ("Killed", "@n_killed"), ("injured", "@n_injured")]
 p.patches(state_xs, state_ys, fill_color=state_colors, fill_alpha=1, line_color="#884444", line_width=1.5)
-# Create scatterplot
-p.circle(x='lon', y='lat', size = 2, fill_alpha=1, fill_color = "blue", source = source)
+p.patches(county_xs, county_ys, fill_alpha=0, line_color="#884444", line_width=.4)
+p.circle(x='lon', y='lat', size=2, fill_alpha=0.5, source=source, name="foo")
 
-from bokeh.models import LogColorMapper, LogTicker, ColorBar
-from bokeh.models import ColorBar, LinearColorMapper, Plot, Range1d, BasicTickFormatter, LinearAxis, LogTicker, FixedTicker, FuncTickFormatter
-
-ticker = FixedTicker(ticks=[500, 16991])
-color_mapper = LogColorMapper(palette=colors, low=400, high=16991)
+ticker = FixedTicker(ticks=[471, 17555])
+color_mapper = LogColorMapper(palette=colors, low=471, high=17555)
 
 color_bar = ColorBar(color_mapper=color_mapper, orientation="horizontal", ticker=ticker,
                      label_standoff=12, border_line_color=None, location=(0,0))
@@ -135,6 +181,3 @@ p.add_layout(color_bar, 'below')
 output_file("murdersonmap.html")
 
 show(p)
-
-
-

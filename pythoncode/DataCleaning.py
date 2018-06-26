@@ -158,6 +158,67 @@ def check_if_number(s):
     except ValueError:
         return False
 
+# participant_age_group_dict = {"C" : {"S" : 0, "V" : 0}, "T" : {"S" : 0, "V" : 0}, "A" : {"S" : 0, "V" : 0}}
+# participant_dict = {"C" : 0, "T" : 0, "A" : 0}
+
+# index = -1
+# SofV = "0"
+# for i in range(len(header_dict['participant_age_group'])):
+#     for j in range(len(header_dict['participant_age_group'][i])-1):
+#         if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
+#             index = int(header_dict['participant_age_group'][i][j])
+#         if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
+#             for k in range(len(header_dict['participant_type'][i])):
+#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
+#                     SofV = header_dict['participant_type'][i][k+3]
+#                     participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV] += 1
+#             participant_dict[header_dict['participant_age_group'][i][j]] +=1
+#     index = -1
+# print(participant_age_group_dict)
+# print(participant_dict)
+
+
+# participant_gender_dict = {"M" : {"S" : 0, "V" : 0}, "F" : {"S" : 0, "V" : 0}}
+# gender_dict = {"M" : 0, "F" : 0}
+
+# index = -1
+# SofV = "0"
+# for i in range(len(header_dict['participant_gender'])):
+#     for j in range(len(header_dict['participant_gender'][i])-1):
+#         if check_if_number(header_dict['participant_gender'][i][j]) and header_dict['participant_gender'][i][j+1] == ":":
+#             index = int(header_dict['participant_gender'][i][j])
+#         if header_dict['participant_gender'][i][j] in participant_gender_dict:
+#             for k in range(len(header_dict['participant_type'][i])):
+#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
+#                     SofV = header_dict['participant_type'][i][k+3]
+#                     participant_gender_dict[header_dict['participant_gender'][i][j]][SofV] += 1
+#             gender_dict[header_dict['participant_gender'][i][j]] +=1
+#     index = -1
+# print(participant_gender_dict)
+# print(gender_dict)
+
+participant_age_group_dict = {"C" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "T" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "A" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}}
+participant_dict = {"C" : 0, "T" : 0, "A" : 0}
+
+index = -1
+SofV = "0"
+MofF = "0"
+for i in range(len(header_dict['participant_age_group'])):
+    for j in range(len(header_dict['participant_age_group'][i])-1):
+        if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
+            index = int(header_dict['participant_age_group'][i][j])
+        if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
+            for k in range(len(header_dict['participant_type'][i])):
+                if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
+                    SofV = header_dict['participant_type'][i][k+3]
+                    for ind in range(len(header_dict['participant_gender'][i])):
+                        if header_dict['participant_gender'][i][ind] == str(index) and (header_dict['participant_gender'][i][ind+3] == "M" or header_dict['participant_gender'][i][ind+3] == "F"):
+                            MofF = header_dict['participant_gender'][i][ind+3]
+                            participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV][MofF] += 1
+            participant_dict[header_dict['participant_age_group'][i][j]] +=1
+    index = -1
+print(participant_age_group_dict)
+print(participant_dict)
 
 # # maakt dictionary met aantal doden per state
 # address_dict = {}
