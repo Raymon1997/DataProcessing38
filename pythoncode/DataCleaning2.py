@@ -178,9 +178,9 @@ relation_values = relation_dict.values()
 relation_keys = relation_dict.keys()
 
 
-#pyplot.axis("equal")
-#pyplot.pie([float(v) for v in relation_values], labels=relation_keys)
-#pyplot.savefig("pie-chart.png")
+pyplot.axis("equal")
+pyplot.pie([float(v) for v in relation_values], labels=relation_keys)
+pyplot.savefig("pie-chart.png")
 
 n_guns = []
 n_killed = []
@@ -192,8 +192,8 @@ for i in range(len(header_dict['n_guns_involved'])):
         n_guns.append(int(header_dict['n_guns_involved'][i]))
         n_killed.append(int(header_dict['n_killed'][i]))
 
-line = LinearRegression()
-line.fit(n_guns,n_killed)
-pyplot.scatter(n_guns,n_killed)
-pyplot.plot(n_guns, line.predict(n_guns), color="k")
-pyplot.show()
+# line = LinearRegression()
+# line.fit(n_guns,n_killed)
+# pyplot.scatter(n_guns,n_killed)
+# pyplot.plot(n_guns, line.predict(n_guns), color="k")
+# pyplot.show()
