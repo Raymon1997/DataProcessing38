@@ -44,7 +44,11 @@ del row_list[0][18]
 del row_list[0][16]
 del row_list[0][12]
 del row_list[0][8]
+<<<<<<< HEAD
 for i in range(235677):
+=======
+for i in range(239677):
+>>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
     row_list.append(next(read))
     del row_list[i+1][0]
     del row_list[i+1][6:9]
@@ -158,6 +162,7 @@ def check_if_number(s):
     except ValueError:
         return False
 
+<<<<<<< HEAD
 # participant_age_group_dict = {"C" : {"S" : 0, "V" : 0}, "T" : {"S" : 0, "V" : 0}, "A" : {"S" : 0, "V" : 0}}
 # participant_dict = {"C" : 0, "T" : 0, "A" : 0}
 
@@ -243,4 +248,30 @@ print(participant_dict)
 # for key in address_dict:
 #     if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
 #         max_killed_key = key
+=======
+
+# maakt dictionary met aantal doden per state
+address_dict = {}
+for i in range(len(header_dict['address'])):
+    max_index = 0
+    address = list(header_dict['address'][i])
+    for index in range(len(address)):
+        if address[index].isdigit() == True:
+            max_index = index
+        else:
+            break
+    if max_index != 0:
+        max_index += 2
+    street_name = "".join(address[max_index:len(address)])
+
+    if street_name in address_dict:
+        address_dict[street_name] += int(header_dict['n_killed'][i])
+    else:
+        address_dict[street_name] = int(header_dict['n_killed'][i])
+max_killed_key = 'Coursin St'
+
+for key in address_dict:
+    if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
+        max_killed_key = key
+>>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
 # print(max_killed_key, address_dict[max_killed_key])
