@@ -5,25 +5,25 @@ import geocoder
 import unicodecsv
 import logging
 
-def reverse_geocoder(lat, lon):
-    g = geocoder.google([lat,lon], method='reverse')
+# def reverse_geocoder(lat, lon):
+#     g = geocoder.google([lat,lon], method='reverse')
 
 
-    if len(g) > 0:
-        address = str(g[0]).split(',')
-        address = address[0][1:]
-        max_index = 0
-        for index in range(len(address)):
-            if address[index].isdigit() == True:
-                max_index = index
-            else:
-                break
-        if max_index != 0:
-            max_index += 2
-        street_name = "".join(address[max_index:len(address)])
-        return street_name
-    else:
-        return False
+#     if len(g) > 0:
+#         address = str(g[0]).split(',')
+#         address = address[0][1:]
+#         max_index = 0
+#         for index in range(len(address)):
+#             if address[index].isdigit() == True:
+#                 max_index = index
+#             else:
+#                 break
+#         if max_index != 0:
+#             max_index += 2
+#         street_name = "".join(address[max_index:len(address)])
+#         return street_name
+#     else:
+#         return False
 
 header_dict = {}
 index = 0
@@ -44,11 +44,7 @@ del row_list[0][18]
 del row_list[0][16]
 del row_list[0][12]
 del row_list[0][8]
-<<<<<<< HEAD
-for i in range(235677):
-=======
 for i in range(239677):
->>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
     row_list.append(next(read))
     del row_list[i+1][0]
     del row_list[i+1][6:9]
@@ -67,7 +63,6 @@ for row in row_list:
         if row[i] == '':
             row[i] = 'NA'
 
-
 #for i in range(len(row_list)):
 #    if i == 0:
 #        continue
@@ -79,9 +74,6 @@ for row in row_list:
 #            while new_address == False:
 #                new_address = reverse_geocoder(lat, lon)
 #            row_list[i][4] = new_address
-
-
-
 
 # Exporteer aangepaste data naar output.csv
 writer = csv.writer(open('output.csv', 'w'))
@@ -162,70 +154,36 @@ def check_if_number(s):
     except ValueError:
         return False
 
-<<<<<<< HEAD
-# participant_age_group_dict = {"C" : {"S" : 0, "V" : 0}, "T" : {"S" : 0, "V" : 0}, "A" : {"S" : 0, "V" : 0}}
-# participant_dict = {"C" : 0, "T" : 0, "A" : 0}
+# Totaal aantal doden
+total = 0
+for n in header_dict["n_killed"]:
+    total += int(n)
+print("Total number killed: ", total)
+print("mean number killed: ", total/50)
+print("gemiddeld aantal doden per maand: ", total/(12*5)+3)
 
-# index = -1
-# SofV = "0"
-# for i in range(len(header_dict['participant_age_group'])):
-#     for j in range(len(header_dict['participant_age_group'][i])-1):
-#         if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
-#             index = int(header_dict['participant_age_group'][i][j])
-#         if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
-#             for k in range(len(header_dict['participant_type'][i])):
-#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-#                     SofV = header_dict['participant_type'][i][k+3]
-#                     participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV] += 1
-#             participant_dict[header_dict['participant_age_group'][i][j]] +=1
-#     index = -1
-# print(participant_age_group_dict)
-# print(participant_dict)
+# Totaal aantal gewonden
+total = 0
+for n in header_dict["n_injured"]:
+    total += int(n)
+print("Total number injured: ", total)
+print("mean number unjured: ", total/50)
+print("gemiddeld aantal gewonden per maand: ", total/(12*5)+3)
+
+# Totaal aantal incidents
+total = 0
+for n in header_dict["n_injured"]:
+    total += 1
+print("Total number incidents: ", total)
+print("mean number incidents: ", total/50)
+print("gemiddeld aantal incidents per maand: ", total/(12*5)+3)
 
 
-# participant_gender_dict = {"M" : {"S" : 0, "V" : 0}, "F" : {"S" : 0, "V" : 0}}
-# gender_dict = {"M" : 0, "F" : 0}
 
-# index = -1
-# SofV = "0"
-# for i in range(len(header_dict['participant_gender'])):
-#     for j in range(len(header_dict['participant_gender'][i])-1):
-#         if check_if_number(header_dict['participant_gender'][i][j]) and header_dict['participant_gender'][i][j+1] == ":":
-#             index = int(header_dict['participant_gender'][i][j])
-#         if header_dict['participant_gender'][i][j] in participant_gender_dict:
-#             for k in range(len(header_dict['participant_type'][i])):
-#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-#                     SofV = header_dict['participant_type'][i][k+3]
-#                     participant_gender_dict[header_dict['participant_gender'][i][j]][SofV] += 1
-#             gender_dict[header_dict['participant_gender'][i][j]] +=1
-#     index = -1
-# print(participant_gender_dict)
-# print(gender_dict)
 
-participant_age_group_dict = {"C" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "T" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "A" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}}
-participant_dict = {"C" : 0, "T" : 0, "A" : 0}
 
-index = -1
-SofV = "0"
-MofF = "0"
-for i in range(len(header_dict['participant_age_group'])):
-    for j in range(len(header_dict['participant_age_group'][i])-1):
-        if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
-            index = int(header_dict['participant_age_group'][i][j])
-        if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
-            for k in range(len(header_dict['participant_type'][i])):
-                if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-                    SofV = header_dict['participant_type'][i][k+3]
-                    for ind in range(len(header_dict['participant_gender'][i])):
-                        if header_dict['participant_gender'][i][ind] == str(index) and (header_dict['participant_gender'][i][ind+3] == "M" or header_dict['participant_gender'][i][ind+3] == "F"):
-                            MofF = header_dict['participant_gender'][i][ind+3]
-                            participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV][MofF] += 1
-            participant_dict[header_dict['participant_age_group'][i][j]] +=1
-    index = -1
-print(participant_age_group_dict)
-print(participant_dict)
 
-# # maakt dictionary met aantal doden per state
+# maakt dictionary met aantal doden per state
 # address_dict = {}
 # for i in range(len(header_dict['address'])):
 #     max_index = 0
@@ -248,30 +206,4 @@ print(participant_dict)
 # for key in address_dict:
 #     if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
 #         max_killed_key = key
-=======
-
-# maakt dictionary met aantal doden per state
-address_dict = {}
-for i in range(len(header_dict['address'])):
-    max_index = 0
-    address = list(header_dict['address'][i])
-    for index in range(len(address)):
-        if address[index].isdigit() == True:
-            max_index = index
-        else:
-            break
-    if max_index != 0:
-        max_index += 2
-    street_name = "".join(address[max_index:len(address)])
-
-    if street_name in address_dict:
-        address_dict[street_name] += int(header_dict['n_killed'][i])
-    else:
-        address_dict[street_name] = int(header_dict['n_killed'][i])
-max_killed_key = 'Coursin St'
-
-for key in address_dict:
-    if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
-        max_killed_key = key
->>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
 # print(max_killed_key, address_dict[max_killed_key])
