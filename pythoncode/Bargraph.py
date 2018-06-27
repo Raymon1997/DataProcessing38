@@ -7,10 +7,10 @@ from bokeh.plotting import figure, output_file, show, ColumnDataSource
 from bokeh.models import HoverTool
 
 
-output_file("injured_killed_guns_barplot.html")
+output_file("injured_killed_guns_barplot.html", mode="inline")
 
 incidents = ['killed', 'injured', 'guns used']
-years = ['2013', '2014', '2015', '2016', '2017', '2018']
+#years = ['2013', '2014', '2015', '2016', '2017', '2018']
 
 data = {'incidents' : incidents,
         '2013'   : [317, 979, 299],
@@ -24,7 +24,7 @@ data = {'incidents' : incidents,
 
 source = ColumnDataSource(data=data)
 
-p = figure(x_range=incidents, y_range=(0, 80000), plot_height=250, title="Incident Counts by Year",
+p = figure(x_range=incidents, y_range=(0, 80000), plot_height=400, title="Incident Counts by Year",
            toolbar_location=None, tools="hover")
 
 hover = p.select(dict(type=HoverTool))

@@ -5,25 +5,25 @@ import geocoder
 import unicodecsv
 import logging
 
-# def reverse_geocoder(lat, lon):
-#     g = geocoder.google([lat,lon], method='reverse')
+def reverse_geocoder(lat, lon):
+    g = geocoder.google([lat,lon], method='reverse')
 
 
-#     if len(g) > 0:
-#         address = str(g[0]).split(',')
-#         address = address[0][1:]
-#         max_index = 0
-#         for index in range(len(address)):
-#             if address[index].isdigit() == True:
-#                 max_index = index
-#             else:
-#                 break
-#         if max_index != 0:
-#             max_index += 2
-#         street_name = "".join(address[max_index:len(address)])
-#         return street_name
-#     else:
-#         return False
+    if len(g) > 0:
+        address = str(g[0]).split(',')
+        address = address[0][1:]
+        max_index = 0
+        for index in range(len(address)):
+            if address[index].isdigit() == True:
+                max_index = index
+            else:
+                break
+        if max_index != 0:
+            max_index += 2
+        street_name = "".join(address[max_index:len(address)])
+        return street_name
+    else:
+        return False
 
 header_dict = {}
 index = 0
@@ -63,6 +63,7 @@ for row in row_list:
         if row[i] == '':
             row[i] = 'NA'
 
+
 #for i in range(len(row_list)):
 #    if i == 0:
 #        continue
@@ -74,6 +75,9 @@ for row in row_list:
 #            while new_address == False:
 #                new_address = reverse_geocoder(lat, lon)
 #            row_list[i][4] = new_address
+
+
+
 
 # Exporteer aangepaste data naar output.csv
 writer = csv.writer(open('output.csv', 'w'))
@@ -117,12 +121,75 @@ print(average_used)
 #             year_dict[header_dict['date'][i][5:7]] = int(header_dict['n_guns_involved'][i])
 
 
+killed_dict = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_dict:
+        killed_dict[header_dict['state'][i]] += int(1)
+    else:
+        killed_dict[header_dict['state'][i]] = int()
+print(killed_dict)
+
+
+injured_dict = {}
+for i in range(len(header_dict['date'])):
+    if header_dict['date'][i][0:7] in injured_dict:
+        injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
+    else:
+        injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
+
+
 year_dict = {}
 for i in range(len(header_dict['date'])):
-    if header_dict['date'][i][0:4] in year_dict:
-        year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
+    if header_dict['date'][i][0:7] in year_dict:
+        year_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
     else:
-        year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
+        year_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
+print(year_dict)
+
+import numpy as np
+
+from bokeh.plotting import figure, output_file, show
+
+dates = []
+killed = []
+injured = []
+for key in year_dict.keys():
+    dates.append(np.datetime64(key))
+for value in year_dict.values():
+    killed.append(value)
+for value in injured_dict.values():
+    injured.append(value)
+
+window_size = 30
+window = np.ones(window_size)/float(window_size)
+
+
+# output to static HTML file
+output_file("killed.html", title="normal graph")
+
+# create a new plot with a a datetime axis type
+p = figure(width=800, height=350, x_axis_type="datetime")
+
+# add renderers
+p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
+p.line(dates, killed, color='red', legend='killed', line_width=0.4)
+p.line(dates, injured, color='navy', legend='injured', line_width=0.4)
+# NEW: customize by setting attributes
+p.title.text = "People killed by date"
+p.legend.location = "top_left"
+p.grid.grid_line_alpha = 0
+p.xaxis.axis_label = 'Date'
+p.yaxis.axis_label = 'Killed'
+p.ygrid.band_fill_color = "olive"
+p.ygrid.band_fill_alpha = 0.1
+
+
+
+
+
+# show the results
+
+show(p)
 
 # maakt dictionary met aantal doden per state
 
@@ -154,34 +221,6 @@ def check_if_number(s):
     except ValueError:
         return False
 
-# Totaal aantal doden
-total = 0
-for n in header_dict["n_killed"]:
-    total += int(n)
-print("Total number killed: ", total)
-print("mean number killed: ", total/50)
-print("gemiddeld aantal doden per maand: ", total/(12*5)+3)
-
-# Totaal aantal gewonden
-total = 0
-for n in header_dict["n_injured"]:
-    total += int(n)
-print("Total number injured: ", total)
-print("mean number unjured: ", total/50)
-print("gemiddeld aantal gewonden per maand: ", total/(12*5)+3)
-
-# Totaal aantal incidents
-total = 0
-for n in header_dict["n_injured"]:
-    total += 1
-print("Total number incidents: ", total)
-print("mean number incidents: ", total/50)
-print("gemiddeld aantal incidents per maand: ", total/(12*5)+3)
-
-
-
-
-
 
 # maakt dictionary met aantal doden per state
 # address_dict = {}
@@ -196,13 +235,13 @@ print("gemiddeld aantal incidents per maand: ", total/(12*5)+3)
 #     if max_index != 0:
 #         max_index += 2
 #     street_name = "".join(address[max_index:len(address)])
-
+#
 #     if street_name in address_dict:
 #         address_dict[street_name] += int(header_dict['n_killed'][i])
 #     else:
 #         address_dict[street_name] = int(header_dict['n_killed'][i])
 # max_killed_key = 'Coursin St'
-
+#
 # for key in address_dict:
 #     if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
 #         max_killed_key = key

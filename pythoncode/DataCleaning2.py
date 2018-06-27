@@ -18,7 +18,7 @@ ifile  = open('stage3.csv', "r", encoding='UTF-8')
 read = csv.reader(ifile)
 headers = next(read)
 row_list.append(headers)
-for i in range(500):
+for i in range(239677):
     row_list.append(next(read))
 
 # Veranderd missende data in NA
@@ -90,13 +90,13 @@ for i in range(len(header_dict['participant_relationship'])):
         if header_dict['date'][i][0:4] in family_dict:
             family_dict[header_dict['date'][i][0:4]] += 1
         else:
-            family_dict[header_dict['date'][i][0:4]] = 1  
+            family_dict[header_dict['date'][i][0:4]] = 1
     if 'Gang vs Gang' in header_dict['participant_relationship'][i]:
             if header_dict['date'][i][0:4] in gang_dict:
                 gang_dict[header_dict['date'][i][0:4]] += 1
             else:
                 gang_dict[header_dict['date'][i][0:4]] = 1
-    
+
 relation_type = []
 
 for i in range(len(header_dict['participant_relationship'])):
@@ -120,7 +120,7 @@ for i in range(len(header_dict['participant_relationship'])):
         if 'Aquaintance' in relation_dict:
             relation_dict['Aquaintance'] += 1
         else:
-            relation_dict['Aquaintance'] = 1  
+            relation_dict['Aquaintance'] = 1
     elif 'Armed Robbery' in header_dict['participant_relationship'][i]:
             if 'Armed Robbery' in relation_dict:
                 relation_dict['Armed Robbery'] += 1
@@ -172,7 +172,7 @@ for i in range(len(header_dict['participant_relationship'])):
             else:
                 relation_dict['Significant others '] = 1
 
-
+print(relation_dict)
 
 relation_values = relation_dict.values()
 relation_keys = relation_dict.keys()
