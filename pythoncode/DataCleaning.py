@@ -133,8 +133,8 @@ output_file("killed.html", title="normal graph")
 p = figure(width=800, height=350, x_axis_type="datetime")
 
 # add renderers
-p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
-p.circle(dates, injured, size=4, color='darkgrey', alpha=3, legend='close')
+p.circle(dates, killed, size=4, color='darkgrey', alpha=3)
+p.circle(dates, injured, size=4, color='darkgrey', alpha=3)
 p.line(dates, killed, color='red', legend='killed', line_width=0.9)
 p.line(dates, injured, color='navy', legend='injured', line_width=0.9)
 # NEW: customize by setting attributes
@@ -142,7 +142,7 @@ p.title.text = "killed and injured by date"
 p.legend.location = "top_left"
 p.grid.grid_line_alpha = 0
 p.xaxis.axis_label = 'Date'
-p.yaxis.axis_label = 'Killed'
+p.yaxis.axis_label = 'Killed and Injured'
 p.ygrid.band_fill_color = "olive"
 p.ygrid.band_fill_alpha = 0.1
 show(p)
