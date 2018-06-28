@@ -54,7 +54,7 @@
 	opacity: 0;
 }
 #injured_killed_guns_barplot {
-	width: 40%;
+	width: 50%;
 	float: right;
 
 }
@@ -228,6 +228,8 @@
 	font-family: "Source Sans Pro";
 }
 body {
+	max-width: 100%;
+    overflow-x: hidden;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -260,12 +262,13 @@ body {
 	height: 100%;
 }
 #murdersonmap {
+	padding-top: 15%;
 	margin: auto;
 	width: 85%;
 }
 #table2 {
 	float: right;
-	width: 35%;
+	width: 40%;
 }
 
 .wrapper {
@@ -280,6 +283,61 @@ body {
 #choropleth {
 	width:85%;
 	margin: auto;
+}
+.background .layer .under_title {
+	margin: auto;
+	padding-top:0%;
+	font-weight: bold;
+	font-size: 20px;
+	font-style: normal;
+	font-family: "Source Sans Pro";
+	text-align: center;
+	color: #FFFFFF;
+	letter-spacing: 2px;
+}
+.background .layer ._title {
+	margin: auto;
+	padding-top:0%;
+	font-weight: bold;
+	font-size: 40px;
+	font-style: normal;
+	font-family: "Source Sans Pro";
+	text-align: center;
+	color: #FFFFFF;
+	letter-spacing: 2px;
+}
+.wrapper .desc .graph_titles {
+	padding-top: 15%;
+	margin: auto;
+	font-weight: bold;
+	font-size: 20px;
+	font-style: normal;
+	font-family: "Times New Roman";
+	color: black;
+	letter-spacing: 2px;
+}
+.font {
+	padding-top: 5%;
+	margin: auto;
+	font-weight: bold;
+	font-size: 14px;
+	font-style: normal;
+	font-family: "Times New Roman";
+	color: black;
+	letter-spacing: 2px;
+}
+.wrapper .desc .graph_titles2 {
+	margin: auto;
+	font-weight: bold;
+	font-size: 20px;
+	font-style: normal;
+	font-family: "Times New Roman";
+	color: black;
+	letter-spacing: 2px;
+}
+.wrapper #regression {
+	float: right;
+	width: 35%;
 }
 
 
@@ -521,7 +579,7 @@ body {
 
 #deadliestmonth_quadrantaverage {
 	float: right;
-	width: 40%;
+	width: 45%;
 }
 
 #myBtn {

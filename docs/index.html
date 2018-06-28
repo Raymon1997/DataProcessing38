@@ -20,7 +20,11 @@
 		<div class="layer">
 			<div class="primary_header">
 			</div>
-			<h1 class="title"> GunCrimeUS</h1>
+			<h1 class="title"> Data Analyses & Visualisation</h1>
+			<h1 class="_title"> Gun Violence in the U.S.</h1>
+			<br>
+			<h1 class="under_title">by Jeroen van Wely, Raymon Van Dijk, Tessel van Roozendaal, Chang Jiang </h1>
+			<h1 class="under_title">11289988, 11753730, 11075228, 11045396</h1>
 		</div>
 	</div>
   <header>
@@ -45,7 +49,9 @@
 <br>
  <div class="wrapper">
  	<div class="desc">
- 	asadad
+ 	 	<h1 class="graph_titles"> Relation between shooter and victim</h1>
+ 	 	<br>
+ 	 	<h2 class="font"> This pie chart illustrates the relation between shooter and victim. As you can see armed robbery, family and significant others are the most common relations that have been found. Also the category drive by is so small compared to the others that it is almost not visible on the chart. </h2>
  	</div>
 	  
   	<div id="pie_chart"><a name="pie_chart"></a><iframe style="width:100%;height:450px" src="graphs/circle.html" frameborder="0" scrolling="no"></iframe></div>
@@ -54,7 +60,8 @@
   	<br>	
   <div class="wrapper">
   <div class="desc">
-  	Description
+  	<h1 class="graph_titles">Number of killed, injured and guns used per year</h1>
+  	<h2 class="font">This graph illustrates how many people are killed, injured and how many guns are used per year. As you can see 2013 and 2018 are always lower in every category. The lower rates in 2013 might be a consequence of missing data during that year. The lower rates for 2018 are explained with the fact that only the first three months are registered in the data of that year. Also when looking at the years 2014 through 2017 it is noticable that there is an increase in all categories</h2>
   </div>
   <div id="injured_killed_guns_barplot" class="tabcontent">
   	<a name="yearlyvictims"></a>
@@ -66,7 +73,8 @@
   <br>
   <div class="wrapper" style="height: 350px;">
   	<div class="desc" style="height: 350px;">
-  		Description
+  		<h1 class="graph_titles">Number of People killed and injured by month</h1>
+  		<h2 class="font"> The red line represents the number of people that are killed in each month. The blue respresents the number of injured people each month. The numbers in the months of the year 2013 are noticable low, because as earlier stated that data might be mising. From 2014 to 2018 an increase in the number of people killed and injured permoth is noticable.</h2>
  	</div>
  	<div id="killedpermonth" class="tabcontent">
   		<a name="killed_per_month"></a>
@@ -77,7 +85,8 @@
     <br>
   <div class="wrapper" style="height: 340px;">
   	<div class="desc" style="height: 340px;">
-  		Description
+  		<h1 class="graph_titles">Most dangerous months in a year</h1>
+  		<h2 class="font">This table shows the number of victims each month from the years 2013 through 2017. The month with most victims are April, July and August. The data from the 2018 has been left out, because only data of the first three months were available.</h2>
   	</div>
   	<div id="killed_injured_table" class="tabcontent">
   <a name="table"></a>
@@ -88,49 +97,71 @@
   <br>
   <div class="wrapper" style="height: 150px;">
   	<div class="desc" style="height: 150px">
-  		Description
+  		<h1 class="graph_titles2">Distinction between victim and suspect</h1>
+  		<h2 class="font">This table illustrates the number of suspects and victims from 2013 to 2018. It is shown in which age-group the victims and suspects <belong></belong> to and
+  		whether they are male or female. The number of female participants related to gun violence is significant less then male partipants.</h2>
   	</div>
   	<div id="table2" class="tabcontent">
   <a name="table"></a>
   	<iframe style="width:100%;height:150px" src="graphs/data_data_table.html" frameborder="0" align="middle" scrolling="no"></iframe>
   </div>
   </div>
+  <br>
+  <br>
   <div class="wrapper" style="height: 380px;">
   	<div class="desc" style="height: 380px;">
-  	Description
+  	 <h1 class="graph_titles">Average People killed per month</h1>
+  	 <h2 class="font">This bar chart shows the mean value of the people killed per month. The red dot represents the mean value of every quadrant. As can be seen in the chart the third quadrant has the most highest number of fatalities.</h2>
   </div>
   <div id="deadliestmonth_quadrantaverage" class="tabcontent">
  		<a name="Guncrime Victims"></a>
   		<iframe style="width:100%;height:380px" src="graphs/average per month.html" frameborder="0" scrolling="no"></iframe>
   </div>
   </div>
-  <br>
-  <br>
+  <div class="wrapper" style= "height: 280px;">
+  	<div class="desc" style="height: 280px;">
+  		<h1 class="graph_titles">Clustering of amount of people killed and injured per incident</h1>
+  		<h2 class="font">This scatterplot shows the amount of people killed and injured per incident. The cluster in the leftcorner shows that most of the incidents involve more or less the same amount of people killed as injured. </h2>
+  	</div>
+  	<div id="regression" class="tabcontent">
+    <iframe style="width:100%;height:280px" src="graphs/regression.html" frameborder="0" align="middle" scrolling="no"></iframe>
+  </div>
+  </div>
+	<div>
+  	<div class="desc" style="width: 85%;height: 150px;">
+  	<h1 style="padding-top: 5%; font-family: Times New Roman;font-size: 20px;margin: auto;font-weight: bold;font-style: normal;letter-spacing: 2px;color: black;">The Geomap</h1>
+  	<h2 class="font">In this map the blue dots represents the gun violence incidents. The color of the state represents to amount of incidents that have occured in the state. The colorbar shows the exact number each color represents. The map has a zoom function which can be used to have a better at single dots. It is possible to hover over the dots to see specifics of every incident.</h2>
+  	</div>	
   
   <div id="murdersonmap" class="tabcontent">
   <a name="locations"></a>
  		<a name="murdersonmap"></a>
   		<iframe style="width:100%;height:800px" src="graphs/murdersonmap.html" frameborder="0" scrolling="no"></iframe>
   </div>
+  </div>
+  
   <div class="wrapper" style="height: 0px"></div>
+  <div class="desc" style="width: 85%;height: 200px;">
+  	<h1 style="padding-top: 5%; font-family: Times New Roman;font-size: 20px;margin: auto;font-weight: bold;font-style: normal;letter-spacing: 2px;color: black;">Killed and injured to population geomap</h1>
+  	<h2 class="font">This map shows in the same way as above the amount of gun violence in every state relative to its population size.</h2>
+  </div>
   <div id="relative_geomap" class="tabcontent">
  		<a name="relative_geomap"></a>
   		<iframe style="width:100%;height:800px" src="graphs/relative_geomap.html" frameborder="0" scrolling="no"></iframe>
   </div>
   <div class="wrapper" style="height: 0px"></div>
+  <div class="desc" style="width: 85%; height: 200px;">
+  	<h1 style=" padding-top: 5%; font-family: Times New Roman;font-size: 20px;margin: auto;font-weight: bold;font-style: normal;letter-spacing: 2px;color: black;">Poverty Geomap</h1>
+  	<h2 class="font">
+This map shows in the same way as above the poverty rate in each state so it can be compared to the amount of gun violence in every state.</h2>
+  </div>
   <div id="choropleth" class="tabcontent">
  	<a name="choropleth"></a>
   	<iframe style="width:100%;height:700px" src="graphs/choropleth.html" frameborder="0" scrolling="no"></iframe>
   </div>
   <div class="wrapper" style="height: 0px"></div>
-  <div class="social">
-    <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
-    <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
-    <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
-    <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
-  </div>
   <footer class="secondary_header footer">
-    <div class="copyright">&copy;2015</div>
+    <div class="copyright">&copy;2018</div>
   </footer>
 </body>
 </html>
