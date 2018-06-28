@@ -168,29 +168,90 @@ for i in range(len(header_dict['city_or_county'])):
         city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
 
 # Laad data in met populaties per staat
-header_dict2={}
-row_list2 = []
-index2 = 0
-ifile  = open('data.csv', "r")
-read = csv.reader(ifile)
-headers = next(read)
-row_list2.append(headers)
-for i in range(51):
-    row_list2.append(next(read))
+# header_dict2={}
+# row_list2 = []
+# index2 = 0
+# ifile  = open('data.csv', "r")
+# read = csv.reader(ifile)
+# headers = next(read)
+# row_list2.append(headers)
+# for i in range(51):
+#     row_list2.append(next(read))
+#
+#
+# for header in headers:
+#     header_dict2[header] = []
+#     for i in range(1, len(row_list2)):
+#         header_dict2[header].append(row_list2[i][index2])
+#     index2 += 1
+#
+#
+# # Maak dictionary aan met als keys de staten en als values hun populatie
+# pop_dict = {}
+# for i in range(len(header_dict2['State'])):
+#     if header_dict2['State'][i] in pop_dict:
+#         pop_dict[header_dict2['State'][i]] += int(header_dict2['2018 Population'][i])
+#     else:
+#         pop_dict[header_dict2['State'][i]] = int(header_dict2['2018 Population'][i])
+#
+# # vind relatief gevaarlijkste staat
+# max_state = 0
+# max_pop = 1000000
+# state_pop_dict = {}
+# for state in state_dict:
+#     state_pop_dict[state] = float(state_dict[state]/pop_dict[state]) * 100
+#     if float(state_dict[state]/pop_dict[state])*100 > max_pop:
+#         max_state = state
+#         max_pop = float(state_dict[state]/pop_dict[state])*100
+#
+# print(state_pop_dict)
+# print(max_state, max_pop)
+#
+
+# averages
+
+killed_2014 = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_2014:
+        if header_dict['date'][i][0:4] == '2014':
+            killed_2014[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+         if header_dict['date'][i][0:4] == '2014':
+             killed_2014[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+
+killed_2015 = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_2015:
+        if header_dict['date'][i][0:4] == '2015':
+            killed_2015[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+         if header_dict['date'][i][0:4] == '2015':
+             killed_2015[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+
+killed_2016 = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_2016:
+        if header_dict['date'][i][0:4] == '2016':
+            killed_2016[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+         if header_dict['date'][i][0:4] == '2016':
+             killed_2016[header_dict['state'][i]] = int(header_dict['n_killed'][i])
 
 
-for header in headers:
-    header_dict2[header] = []
-    for i in range(1, len(row_list2)):
-        header_dict2[header].append(row_list2[i][index2])
-    index2 += 1
+killed_2017 = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_2017:
+        if header_dict['date'][i][0:4] == '2017':
+            killed_2017[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+         if header_dict['date'][i][0:4] == '2017':
+             killed_2017[header_dict['state'][i]] = int(header_dict['n_killed'][i])
 
-
-# Maak dictionary aan met als keys de staten en als values hun populatie
-pop_dict = {}
-for i in range(len(header_dict2['State'])):
-    if header_dict2['State'][i] in pop_dict:
-        pop_dict[header_dict2['State'][i]] += int(header_dict2['2018 Population'][i])
+killed_average = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_average:
+        if header_dict['date'][i][0:4] != '2013' and header_dict['date'][i][0:4] != '2018':
+            killed_average[header_dict['state'][i]] += int(header_dict['n_killed'][i])/4
     else:
         pop_dict[header_dict2['State'][i]] = int(header_dict2['2018 Population'][i])
 
