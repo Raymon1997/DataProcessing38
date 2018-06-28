@@ -5,24 +5,14 @@ import geocoder
 import unicodecsv
 import logging
 
-def reverse_geocoder(lat, lon):
-    g = geocoder.google([lat,lon], method='reverse')
+import numpy as np
+from bokeh.plotting import figure, output_file, show
 
-
-    if len(g) > 0:
-        address = str(g[0]).split(',')
-        address = address[0][1:]
-        max_index = 0
-        for index in range(len(address)):
-            if address[index].isdigit() == True:
-                max_index = index
-            else:
-                break
-        if max_index != 0:
-            max_index += 2
-        street_name = "".join(address[max_index:len(address)])
-        return street_name
-    else:
+def check_if_number(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
         return False
 
 header_dict = {}
@@ -44,11 +34,7 @@ del row_list[0][18]
 del row_list[0][16]
 del row_list[0][12]
 del row_list[0][8]
-<<<<<<< HEAD
-for i in range(235677):
-=======
 for i in range(239677):
->>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
     row_list.append(next(read))
     del row_list[i+1][0]
     del row_list[i+1][6:9]
@@ -66,22 +52,6 @@ for row in row_list:
     for i in range(len(row)):
         if row[i] == '':
             row[i] = 'NA'
-
-
-#for i in range(len(row_list)):
-#    if i == 0:
-#        continue
-#    else:
-#        lat = row_list[i][8]
-#        lon = row_list[i][9]
-#        if lat != 'NA' and lon != 'NA':
-#            new_address = reverse_geocoder(lat, lon)
-#            while new_address == False:
-#                new_address = reverse_geocoder(lat, lon)
-#            row_list[i][4] = new_address
-
-
-
 
 # Exporteer aangepaste data naar output.csv
 writer = csv.writer(open('output.csv', 'w'))
@@ -102,46 +72,73 @@ for value in header_dict['n_guns_involved']:
         guns_used_list.append(value)
         number_of_guns += int(value)
 average_used = number_of_guns/len(guns_used_list)
-print(average_used)
-#bepaal totaal aantal gestolen wapens
-# number_of_guns_stolen = 0
-# for value in header_dict['gun_stolen']:
-#     if 'Unknown' in value:
-#     if len(list(value)) < 2:
-#         number_of_guns_stolen += int(value)
 
-# maakt dictionary met aantal guns involved
-# month_dict = {}
-# for i in range(len(header_dict['date'])):
-#     if header_dict['date'][i][5:7] in year_dict:
-#         if header_dict['n_guns_involved'][i] == 'NA':
-#             year_dict[header_dict['date'][i][5:7]] += 1
-#         else:
-#             year_dict[header_dict['date'][i][5:7]] += int(header_dict['n_guns_involved'][i])
-#     else:
-#         if header_dict['n_guns_involved'][i] == 'NA':
-#             year_dict[header_dict['date'][i][5:7]] = 1
-#         else:
-#             year_dict[header_dict['date'][i][5:7]] = int(header_dict['n_guns_involved'][i])
+# Bepaal killed per staat
+killed_dict = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_dict:
+        killed_dict[header_dict['state'][i]] += int(1)
+    else:
+        killed_dict[header_dict['state'][i]] = int()
 
+# Bepaal injured per year
+injured_dict = {}
+for i in range(len(header_dict['date'])):
+    if header_dict['date'][i][0:7] in injured_dict:
+        injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_injured'][i])
+    else:
+        injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_injured'][i])
 
+# bepaald killed per jaar
 year_dict = {}
 for i in range(len(header_dict['date'])):
-    if header_dict['date'][i][0:4] in year_dict:
-        year_dict[header_dict['date'][i][0:4]] += int(header_dict['n_killed'][i])
+    if header_dict['date'][i][0:7] in year_dict:
+        year_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
     else:
-        year_dict[header_dict['date'][i][0:4]] = int(header_dict['n_killed'][i])
+        year_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
+
+dates = []
+killed = []
+injured = []
+for key in year_dict.keys():
+    dates.append(np.datetime64(key))
+for value in year_dict.values():
+    killed.append(value)
+for value in injured_dict.values():
+    injured.append(value)
+
+window_size = 30
+window = np.ones(window_size)/float(window_size)
+
+# output to static HTML file
+output_file("killed.html", title="normal graph")
+
+# create a new plot with a a datetime axis type
+p = figure(width=800, height=350, x_axis_type="datetime")
+
+# add renderers
+p.circle(dates, killed, size=4, color='darkgrey', alpha=3, legend='close')
+p.circle(dates, injured, size=4, color='darkgrey', alpha=3, legend='close')
+p.line(dates, killed, color='red', legend='killed', line_width=0.9)
+p.line(dates, injured, color='navy', legend='injured', line_width=0.9)
+# NEW: customize by setting attributes
+p.title.text = "People killed by date"
+p.legend.location = "top_left"
+p.grid.grid_line_alpha = 0
+p.xaxis.axis_label = 'Date'
+p.yaxis.axis_label = 'Killed'
+p.ygrid.band_fill_color = "olive"
+p.ygrid.band_fill_alpha = 0.1
+
+show(p)
 
 # maakt dictionary met aantal doden per state
-
-
-
 state_dict = {}
 for i in range(len(header_dict['state'])):
     if header_dict['state'][i] in state_dict:
-        state_dict[header_dict['state'][i]] += int(header_dict['n_injured'][i])
+        state_dict[header_dict['state'][i]] += int(header_dict['n_killed'][i])
     else:
-        state_dict[header_dict['state'][i]] = int(header_dict['n_injured'][i])
+        state_dict[header_dict['state'][i]] = int(header_dict['n_killed'][i])
 
 # maakt dictionary met aantal doden per city/county
 city_or_county_dict = {}
@@ -154,101 +151,6 @@ for i in range(len(header_dict['city_or_county'])):
         city_or_county_dict[header_dict['city_or_county'][i]] += int(header_dict['n_killed'][i])
     else:
         city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
-
-def check_if_number(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
-
-<<<<<<< HEAD
-# participant_age_group_dict = {"C" : {"S" : 0, "V" : 0}, "T" : {"S" : 0, "V" : 0}, "A" : {"S" : 0, "V" : 0}}
-# participant_dict = {"C" : 0, "T" : 0, "A" : 0}
-
-# index = -1
-# SofV = "0"
-# for i in range(len(header_dict['participant_age_group'])):
-#     for j in range(len(header_dict['participant_age_group'][i])-1):
-#         if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
-#             index = int(header_dict['participant_age_group'][i][j])
-#         if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
-#             for k in range(len(header_dict['participant_type'][i])):
-#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-#                     SofV = header_dict['participant_type'][i][k+3]
-#                     participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV] += 1
-#             participant_dict[header_dict['participant_age_group'][i][j]] +=1
-#     index = -1
-# print(participant_age_group_dict)
-# print(participant_dict)
-
-
-# participant_gender_dict = {"M" : {"S" : 0, "V" : 0}, "F" : {"S" : 0, "V" : 0}}
-# gender_dict = {"M" : 0, "F" : 0}
-
-# index = -1
-# SofV = "0"
-# for i in range(len(header_dict['participant_gender'])):
-#     for j in range(len(header_dict['participant_gender'][i])-1):
-#         if check_if_number(header_dict['participant_gender'][i][j]) and header_dict['participant_gender'][i][j+1] == ":":
-#             index = int(header_dict['participant_gender'][i][j])
-#         if header_dict['participant_gender'][i][j] in participant_gender_dict:
-#             for k in range(len(header_dict['participant_type'][i])):
-#                 if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-#                     SofV = header_dict['participant_type'][i][k+3]
-#                     participant_gender_dict[header_dict['participant_gender'][i][j]][SofV] += 1
-#             gender_dict[header_dict['participant_gender'][i][j]] +=1
-#     index = -1
-# print(participant_gender_dict)
-# print(gender_dict)
-
-participant_age_group_dict = {"C" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "T" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}, "A" : {"S" : {"M" : 0, "F" : 0}, "V" : {"M" : 0, "F" : 0}}}
-participant_dict = {"C" : 0, "T" : 0, "A" : 0}
-
-index = -1
-SofV = "0"
-MofF = "0"
-for i in range(len(header_dict['participant_age_group'])):
-    for j in range(len(header_dict['participant_age_group'][i])-1):
-        if check_if_number(header_dict['participant_age_group'][i][j]) and header_dict['participant_age_group'][i][j+1] == ":":
-            index = int(header_dict['participant_age_group'][i][j])
-        if header_dict['participant_age_group'][i][j] in participant_age_group_dict:
-            for k in range(len(header_dict['participant_type'][i])):
-                if header_dict['participant_type'][i][k] == str(index) and (header_dict['participant_type'][i][k+3] == "S" or header_dict['participant_type'][i][k+3] == "V"):
-                    SofV = header_dict['participant_type'][i][k+3]
-                    for ind in range(len(header_dict['participant_gender'][i])):
-                        if header_dict['participant_gender'][i][ind] == str(index) and (header_dict['participant_gender'][i][ind+3] == "M" or header_dict['participant_gender'][i][ind+3] == "F"):
-                            MofF = header_dict['participant_gender'][i][ind+3]
-                            participant_age_group_dict[header_dict['participant_age_group'][i][j]][SofV][MofF] += 1
-            participant_dict[header_dict['participant_age_group'][i][j]] +=1
-    index = -1
-print(participant_age_group_dict)
-print(participant_dict)
-
-# # maakt dictionary met aantal doden per state
-# address_dict = {}
-# for i in range(len(header_dict['address'])):
-#     max_index = 0
-#     address = list(header_dict['address'][i])
-#     for index in range(len(address)):
-#         if address[index].isdigit() == True:
-#             max_index = index
-#         else:
-#             break
-#     if max_index != 0:
-#         max_index += 2
-#     street_name = "".join(address[max_index:len(address)])
-
-#     if street_name in address_dict:
-#         address_dict[street_name] += int(header_dict['n_killed'][i])
-#     else:
-#         address_dict[street_name] = int(header_dict['n_killed'][i])
-# max_killed_key = 'Coursin St'
-
-# for key in address_dict:
-#     if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
-#         max_killed_key = key
-=======
 
 # maakt dictionary met aantal doden per state
 address_dict = {}
@@ -268,10 +170,57 @@ for i in range(len(header_dict['address'])):
         address_dict[street_name] += int(header_dict['n_killed'][i])
     else:
         address_dict[street_name] = int(header_dict['n_killed'][i])
-max_killed_key = 'Coursin St'
 
+max_killed_key = list(address_dict.keys())[0]
+second = list(address_dict.keys())[0]
+third = list(address_dict.keys())[0]
 for key in address_dict:
-    if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA' :
+    if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA':
+        third = second
+        second = max_killed_key
         max_killed_key = key
->>>>>>> fa463fe0a4f68465c273689a5d704b7291cc6a02
 # print(max_killed_key, address_dict[max_killed_key])
+# print(second, address_dict[second])
+# print(third, address_dict[third])
+
+# for i in range(len(header_dict['address'])):
+#     if header_dict['address'][i] == third:
+#         print(header_dict['city_or_county'][i])
+
+
+header_dict2={}
+row_list2 = []
+index2 = 0
+ifile  = open('data.csv', "r")
+read = csv.reader(ifile)
+headers = next(read)
+row_list2.append(headers)
+for i in range(51):
+    row_list2.append(next(read))
+
+
+for header in headers:
+    header_dict2[header] = []
+    for i in range(1, len(row_list2)):
+        header_dict2[header].append(row_list2[i][index2])
+    index2 += 1
+
+pop_dict = {}
+for i in range(len(header_dict2['State'])):
+    if header_dict2['State'][i] in pop_dict:
+        pop_dict[header_dict2['State'][i]] += int(header_dict2['2018 Population'][i])
+    else:
+        pop_dict[header_dict2['State'][i]] = int(header_dict2['2018 Population'][i])
+
+max_state = 0
+max_pop = 1000000
+state_pop_dict = {}
+for state in state_dict:
+    state_pop_dict[state] = int(pop_dict[state]/state_dict[state])
+    if int(pop_dict[state]/state_dict[state]) < max_pop:
+        max_state = state
+        max_pop = int(pop_dict[state]/state_dict[state])
+
+# print(state_pop_dict)
+# print(max_state, max_pop)
+

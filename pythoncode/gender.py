@@ -6,7 +6,7 @@ from bokeh.layouts import widgetbox
 from bokeh.models import ColumnDataSource
 from bokeh.models.widgets import DataTable, DateFormatter, TableColumn
 
-output_file("data_table.html")
+output_file("data_data_table.html")
 
 data = dict(
         SuspectVictim =["Suspect", "Victim", "Suspect", "Victim"],
@@ -18,12 +18,12 @@ data = dict(
 source = ColumnDataSource(data)
 
 columns = [
-        TableColumn(field="SuspectVictim", title="Suspect/Victim", tags="red"),
+        TableColumn(field="SuspectVictim", title="Suspect/Victim"),
         TableColumn(field="child", title="Child"),
         TableColumn(field="teen", title="Teen"),
         TableColumn(field="adult", title="Adult"),
         TableColumn(field="gender", title="Gender"),
     ]
-data_table = DataTable(source=source, columns=columns, width=1000, height=280)
+data_table = DataTable(source=source, columns=columns, width=500, height=300)
 
 show(widgetbox(data_table))
