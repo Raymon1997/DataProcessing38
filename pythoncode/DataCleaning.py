@@ -138,14 +138,14 @@ p.circle(dates, injured, size=4, color='darkgrey', alpha=3, legend='close')
 p.line(dates, killed, color='red', legend='killed', line_width=0.9)
 p.line(dates, injured, color='navy', legend='injured', line_width=0.9)
 # NEW: customize by setting attributes
-p.title.text = "People killed by date"
+p.title.text = "killed and injured by date"
 p.legend.location = "top_left"
 p.grid.grid_line_alpha = 0
 p.xaxis.axis_label = 'Date'
 p.yaxis.axis_label = 'Killed'
 p.ygrid.band_fill_color = "olive"
 p.ygrid.band_fill_alpha = 0.1
-# show(p)
+show(p)
 
 # maakt dictionary met aantal doden per state
 state_dict = {}
