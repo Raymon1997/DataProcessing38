@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Simple Theme</title>
+<title>Home Page</title>
 <link href="css/multiColumnTemplate.css" rel="stylesheet" type="text/css">
 <script src="script/jscript.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -15,11 +15,14 @@
     <![endif]-->
 </head>
 <body>
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-<div class="primary_header">
-</div>
-	<h1 class="title"> GunCrimeUS</h1>
-<div class="container">
+	<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+	<div class="background">
+		<div class="layer">
+			<div class="primary_header">
+			</div>
+			<h1 class="title"> GunCrimeUS</h1>
+		</div>
+	</div>
   <header>
     
     <nav class="secondary_header" id="menu">
@@ -38,48 +41,88 @@
 <aside class="right_article"> </aside>
   </section>
 <div class="row blockDisplay"> </div>
-  <div id="pie_chart"><a name="pie_chart"></a><img src="graphs/pie_chart.png" alt="" width="150%" height="150%"/></div>
+<br>
+<br>
+ <div class="wrapper">
+ 	<div class="desc">
+ 	asadad
+ 	</div>
+	  
+  	<div id="pie_chart"><a name="pie_chart"></a><iframe style="width:100%;height:450px" src="graphs/circle.html" frameborder="0" scrolling="no"></iframe></div>
+  	</div>
+  	<br>
+  	<br>	
+  <div class="wrapper">
   <div class="desc">
   	Description
   </div>
-  
   <div id="injured_killed_guns_barplot" class="tabcontent">
   	<a name="yearlyvictims"></a>
-  	<iframe style="width:100%;height:300px" src="graphs/injured_killed_guns_barplot.html" frameborder="0" align="middle" scrolling="no"></iframe>
-  </div>
-  <div class="desc">
-  	Description
-  </div>
-  <div id="killedpermonth" class="tabcontent">
-  		<a name="killed_per_month"></a>
-		<iframe style="width:100%;height:400px" src="graphs/killedpermonth .html" frameborder="0" align="middle" ></iframe>
-  </div>
-  <div class="desc">
-  	Description
+  	<iframe style="width:100%;height:450px" src="graphs/injured_killed_guns_barplot.html" frameborder="0" scrolling="no"></iframe>
   </div>
   
-  <div id="killed_injured_table" class="tabcontent">
-  <a name="table"></a>
-  	<iframe style="width:100%;height:300px" src="graphs/killed&injured table.html" frameborder="0" align="middle" scrolling="no"></iframe>
   </div>
-  <div class="desc">
+  <br>
+  <br>
+  <div class="wrapper" style="height: 350px;">
+  	<div class="desc" style="height: 350px;">
+  		Description
+ 	</div>
+ 	<div id="killedpermonth" class="tabcontent">
+  		<a name="killed_per_month"></a>
+		<iframe style="width:100%;height:350px" src="graphs/killed.html" frameborder="0" align="middle" ></iframe>
+  	</div>
+	</div>
+	<br>
+    <br>
+  <div class="wrapper" style="height: 340px;">
+  	<div class="desc" style="height: 340px;">
+  		Description
+  	</div>
+  	<div id="killed_injured_table" class="tabcontent">
+  <a name="table"></a>
+  	<iframe style="width:100%;height:340px" src="graphs/data_table.html" frameborder="0" align="middle" scrolling="no"></iframe>
+  </div>
+  </div>
+  <br>
+  <br>
+  <div class="wrapper" style="height: 150px;">
+  	<div class="desc" style="height: 150px">
+  		Description
+  	</div>
+  	<div id="table2" class="tabcontent">
+  <a name="table"></a>
+  	<iframe style="width:100%;height:150px" src="graphs/data_data_table.html" frameborder="0" align="middle" scrolling="no"></iframe>
+  </div>
+  </div>
+  <div class="wrapper" style="height: 380px;">
+  	<div class="desc" style="height: 380px;">
   	Description
   </div>
   <div id="deadliestmonth_quadrantaverage" class="tabcontent">
  		<a name="Guncrime Victims"></a>
-  		<iframe style="width:100%;height:320px
-  		" src="graphs/deadliestmonth&quadrantaverage.html" frameborder="0" align="middle" 	scrolling="no"></iframe>
+  		<iframe style="width:100%;height:380px" src="graphs/average per month.html" frameborder="0" scrolling="no"></iframe>
   </div>
-  <div class="desc">
-  	Description
   </div>
+  <br>
+  <br>
+  
   <div id="murdersonmap" class="tabcontent">
-  	<a name="locations"></a>
-  	<iframe style="width:1420px;height:1200px" src="graphs/murdersonmap.html" frameborder="0" align="middle" scrolling="no"></iframe>
+  <a name="locations"></a>
+ 		<a name="murdersonmap"></a>
+  		<iframe style="width:100%;height:800px" src="graphs/murdersonmap.html" frameborder="0" scrolling="no"></iframe>
   </div>
-  <div class="desc">
-  	Description
+  <div class="wrapper" style="height: 0px"></div>
+  <div id="relative_geomap" class="tabcontent">
+ 		<a name="relative_geomap"></a>
+  		<iframe style="width:100%;height:800px" src="graphs/relative_geomap.html" frameborder="0" scrolling="no"></iframe>
   </div>
+  <div class="wrapper" style="height: 0px"></div>
+  <div id="choropleth" class="tabcontent">
+ 	<a name="choropleth"></a>
+  	<iframe style="width:100%;height:700px" src="graphs/choropleth.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <div class="wrapper" style="height: 0px"></div>
   <div class="social">
     <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
     <p class="social_icon"><img src="images/bkg_06.jpg" width="100" alt="" class="thumbnail"/></p>
@@ -89,6 +132,5 @@
   <footer class="secondary_header footer">
     <div class="copyright">&copy;2015</div>
   </footer>
-</div>
 </body>
 </html>

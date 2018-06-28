@@ -16,8 +16,7 @@ X = df["n_killed"]
 Y = df["n_injured"]
 
 X = np.vstack([X, np.ones(X.shape[0])]).T
-# = np.vstack([x, np.ones(len(x))]).T
-a, b = np.linalg.lstsq(X, Y)[0]
+a, b = np.linalg.lstsq(X, Y,)[0]
 
 f = figure(plot_width=400, plot_height=250)
 
@@ -26,7 +25,7 @@ f.scatter([x for x in df["n_killed"] if x < 50], [y for y in df["n_injured"] if 
 
 x = df["n_killed"]
 
-f.line(x, a * -x + b, color= "red")
+# f.line(x, a * x + b, color= "red")
 
 f.xaxis.axis_label = "Number Killed People"
 f.yaxis.axis_label = "Number Injured People"

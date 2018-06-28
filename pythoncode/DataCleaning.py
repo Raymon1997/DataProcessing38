@@ -88,7 +88,7 @@ for i in range(len(header_dict['date'])):
         injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_injured'][i])
     else:
         injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_injured'][i])
-
+print(injured_dict)
 # bepaal aantal incidenten per staat
 killed_dict = {}
 for i in range(len(header_dict['state'])):
@@ -246,6 +246,15 @@ for i in range(len(header_dict['state'])):
     else:
          if header_dict['date'][i][0:4] == '2017':
              killed_2017[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+killed_2018 = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_2018:
+        if header_dict['date'][i][0:4] == '2018':
+            killed_2018[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+    else:
+         if header_dict['date'][i][0:4] == '2018':
+             killed_2018[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+
 
 killed_average = {}
 for i in range(len(header_dict['state'])):

@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Bokeh Plot</title>
+        
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css" type="text/css" />
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.css" type="text/css" />
+        
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.js"></script>
+<script type="text/javascript">
+    Bokeh.set_log_level("info");
+</script>
+        <style>
+          html {
+            width: 100%;
+            height: 100%;
+          }
+          body {
+            width: 90%;
+            height: 100%;
+            margin: auto;
+          }
+        </style>
+    </head>
+    <body>
+        
+        <div class="bk-root">
+            <div class="bk-plotdiv" id="828caa3f-5d63-458c-8fc7-dccea7ef1309"></div>
+        </div>
+        
+        <script type="application/json" id="330981d7-5055-4359-8ebb-a9b1ffdc1376">
+          {"8b19531c-046f-4218-8638-16e4995e5290":{"roots":{"references":[{"attributes":{"editor":{"id":"36b9b847-034d-4151-bcea-04d62b051586","type":"StringEditor"},"field":"SuspectVictim","formatter":{"id":"d1623fa0-cc35-428f-b236-02101fb2a299","type":"StringFormatter"},"title":"Suspect/Victim"},"id":"98a8f01d-e6e1-4ee0-9bb6-88370e986520","type":"TableColumn"},{"attributes":{},"id":"b1bc512e-1091-4d43-b76f-e22d02cb33ba","type":"StringFormatter"},{"attributes":{"editor":{"id":"7a059901-a8d3-4d8a-977e-b548721a568d","type":"StringEditor"},"field":"child","formatter":{"id":"b1bc512e-1091-4d43-b76f-e22d02cb33ba","type":"StringFormatter"},"title":"Child"},"id":"2884d229-f46e-46c1-94e8-39e980079d9e","type":"TableColumn"},{"attributes":{},"id":"d1623fa0-cc35-428f-b236-02101fb2a299","type":"StringFormatter"},{"attributes":{"source":{"id":"a0992766-998a-4df9-b4fb-01020ed91a4a","type":"ColumnDataSource"}},"id":"1de70cc8-7892-4950-bd74-4b1e4203b9dc","type":"CDSView"},{"attributes":{"children":[{"id":"a5f8cddd-a961-4bee-b817-2165a9d0b527","type":"DataTable"}]},"id":"e632377f-ee03-4e6f-840f-fd34484f2cc3","type":"WidgetBox"},{"attributes":{},"id":"26f6dff7-5882-483a-ab71-40f00bd722d9","type":"StringFormatter"},{"attributes":{},"id":"36b9b847-034d-4151-bcea-04d62b051586","type":"StringEditor"},{"attributes":{"editor":{"id":"b0426ab4-188d-4013-b2c6-143696f551f6","type":"StringEditor"},"field":"gender","formatter":{"id":"497c09da-94d9-45db-afbd-8439c576eabb","type":"StringFormatter"},"title":"Gender"},"id":"c5f3433f-9679-4f29-a9f4-a4e54e5999f6","type":"TableColumn"},{"attributes":{"columns":[{"id":"98a8f01d-e6e1-4ee0-9bb6-88370e986520","type":"TableColumn"},{"id":"2884d229-f46e-46c1-94e8-39e980079d9e","type":"TableColumn"},{"id":"aaef91e5-791a-47c6-a22f-36a81d89099b","type":"TableColumn"},{"id":"5c579b76-0523-432b-8bc3-2567086f6ed8","type":"TableColumn"},{"id":"c5f3433f-9679-4f29-a9f4-a4e54e5999f6","type":"TableColumn"}],"height":300,"source":{"id":"a0992766-998a-4df9-b4fb-01020ed91a4a","type":"ColumnDataSource"},"view":{"id":"1de70cc8-7892-4950-bd74-4b1e4203b9dc","type":"CDSView"},"width":500},"id":"a5f8cddd-a961-4bee-b817-2165a9d0b527","type":"DataTable"},{"attributes":{},"id":"7a059901-a8d3-4d8a-977e-b548721a568d","type":"StringEditor"},{"attributes":{"editor":{"id":"65d42ed5-a7c6-4c7b-afa9-e4a53fe4d1fc","type":"StringEditor"},"field":"adult","formatter":{"id":"26f6dff7-5882-483a-ab71-40f00bd722d9","type":"StringFormatter"},"title":"Adult"},"id":"5c579b76-0523-432b-8bc3-2567086f6ed8","type":"TableColumn"},{"attributes":{},"id":"0288b37f-704c-4165-a348-c643bb8edfe3","type":"StringFormatter"},{"attributes":{},"id":"65d42ed5-a7c6-4c7b-afa9-e4a53fe4d1fc","type":"StringEditor"},{"attributes":{},"id":"8a4ce4e7-55cf-430f-9b12-9a70d3abb044","type":"StringEditor"},{"attributes":{},"id":"497c09da-94d9-45db-afbd-8439c576eabb","type":"StringFormatter"},{"attributes":{},"id":"b0426ab4-188d-4013-b2c6-143696f551f6","type":"StringEditor"},{"attributes":{"callback":null,"column_names":["SuspectVictim","child","teen","adult","gender"],"data":{"SuspectVictim":["Suspect","Victim","Suspect","Victim"],"adult":[139185,122354,10820,27603],"child":[389,2147,42,1276],"gender":["Male","Male","Female","Female"],"teen":[10402,9599,542,2232]}},"id":"a0992766-998a-4df9-b4fb-01020ed91a4a","type":"ColumnDataSource"},{"attributes":{"editor":{"id":"8a4ce4e7-55cf-430f-9b12-9a70d3abb044","type":"StringEditor"},"field":"teen","formatter":{"id":"0288b37f-704c-4165-a348-c643bb8edfe3","type":"StringFormatter"},"title":"Teen"},"id":"aaef91e5-791a-47c6-a22f-36a81d89099b","type":"TableColumn"}],"root_ids":["e632377f-ee03-4e6f-840f-fd34484f2cc3"]},"title":"Bokeh Application","version":"0.12.13"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('330981d7-5055-4359-8ebb-a9b1ffdc1376').textContent;
+                  var render_items = [{"docid":"8b19531c-046f-4218-8638-16e4995e5290","elementid":"828caa3f-5d63-458c-8fc7-dccea7ef1309","modelid":"e632377f-ee03-4e6f-840f-fd34484f2cc3"}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        embed_document(root);
+                        clearInterval(timer);
+                      }
+                      attempts++;
+                      if (attempts > 100) {
+                        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing")
+                        clearInterval(timer);
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    </body>
+</html>

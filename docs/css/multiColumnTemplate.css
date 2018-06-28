@@ -1,15 +1,4 @@
 @charset "UTF-8";
-.container {
-	background-color: #FFFFFF;
-	width: 80%;
-	margin-left: auto;
-	margin-right: auto;
-	border-bottom-width: 0px;
-	padding-left: 0px;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-}
 
 .row {
 	width: 100%;
@@ -51,7 +40,7 @@
 	padding-left: 10%;
 	padding-right: 10%;
 }
-.container .columns h4 {
+.columns h4 {
 	text-align: center;
 	color: #01B2D1;
 }
@@ -64,22 +53,23 @@
 	border-bottom: 2px solid #2C9AB7;
 	opacity: 0;
 }
-.container #injured_killed_guns_barplot {
-	margin: auto;
-	width: 50%;
+#injured_killed_guns_barplot {
+	width: 40%;
+	float: right;
+
 }
-.container .desc {
-	width: 100%;
-	height: 10%;
-	background-color: #3F3F3F;
-	color: white;
+.desc {
+	background-color: #FFFFFF;
+	color: #000000;
 	font-family: "Source Sans Pro";
 	font-weight: normal;
-	text-align: center;
+	text-align: left;
 	letter-spacing: 1px;
+	float: left;
+	height: 450px;
+	width: 30%;
+	padding-left: 10%;
 }
-
-
 
 .secondary_header {
 	width: 100%;
@@ -88,7 +78,7 @@
 	background-color: #B3B3B3;
 	clear: left;
 }
-.container .secondary_header ul {
+.secondary_header ul {
 	margin-top: 0%;
 	margin-right: auto;
 	margin-bottom: 0px;
@@ -128,7 +118,7 @@
 .noDisplay {
 	display: none;
 }
-.container .left_article h3 {
+.left_article h3 {
 	padding-left: 5%;
 	padding-right: 5%;
 	margin-top: 5%;
@@ -136,7 +126,7 @@
 	font-weight: bold;
 	text-transform: uppercase;
 }
-.container .left_article p {
+.left_article p {
 	padding-left: 5%;
 	padding-right: 5%;
 	text-align: justify;
@@ -150,7 +140,7 @@
 	float: left;
 	background-color: #F6F6F6;
 }
-.container .right_article ul {
+.right_article ul {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -186,7 +176,10 @@
 	background-color: #717070;
 }
 .title {
+	margin: auto;
+	padding-top:20%;
 	font-weight: bold;
+	font-size: 60px;
 	font-style: normal;
 	font-family: "Source Sans Pro";
 	text-align: center;
@@ -208,7 +201,7 @@
 .left_half {
 	background-color: #52BAD5;
 }
-.container .column_half.left_half h2 {
+.column_half.left_half h2 {
 	color: #FFFFFF;
 	font-family: "Source Sans Pro";
 	text-align: center;
@@ -239,24 +232,55 @@ body {
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
-	background-image: url(../images/los_angeles_united_states_night_city_buildings_116113_1920x1080.jpg);
-	background-attachment: scroll;
 }
-.container #killedpermonth {
+#killedpermonth {
+	float: right;
+	width: 56%;
+		
+}
+#pie_chart {
+	width: 53%;
+    height: 450px;
+    float: right;
+
+}
+#killed_injured_table {
+	float: right;
+	width: 35%;
+}
+.background {
+	background-image:url(../images/2.jpg);
+    background-repeat: no-repeat;	
+	height: 1080px;
+}
+
+.layer {
+	background: rgba(0, 0, 0, 0.7);
+	width: 100%;
+	height: 100%;
+}
+#murdersonmap {
 	margin: auto;
-	width: 70%;
+	width: 85%;
 }
-.container #pie_chart {
-	width: 66%;
+#table2 {
+	float: right;
+	width: 35%;
 }
-.container #killed_injured_table {
+
+.wrapper {
+	height: 450px;
+	border-bottom: 8px solid #C0C0C0;
+}
+#relative_geomap {
 	margin: auto;
-	width: 50%;
+	width: 85%;
 }
 
-
-
-
+#choropleth {
+	width:85%;
+	margin: auto;
+}
 
 
 @media (max-width: 320px) {
@@ -266,7 +290,7 @@ body {
 	margin-left: 0px;
 	width: 100%;
 }
-.container .secondary_header ul {
+.secondary_header ul {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -335,13 +359,13 @@ body {
 	padding-bottom: 0px;
 	margin-bottom: 0px;
 }
-.container .left_article h3 {
+.left_article h3 {
 	margin-top: 30px;
 }
 .social .social_icon img {
 	width: 80%;
 }
-.container .secondary_header {
+.secondary_header {
 }
 }
 
@@ -352,7 +376,7 @@ body {
 	margin-left: 0px;
 	width: 100%;
 }
-.container .secondary_header ul {
+.secondary_header ul {
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -453,7 +477,7 @@ body {
 	padding-right: 0px;
 	padding-bottom: 0px;
 }
-.container .columns p {
+.columns p {
 	padding-left: 25px;
 	padding-right: 25px;
 }
@@ -488,28 +512,18 @@ body {
 	line-height: 0px;
 	padding-top: 7px;
 }
-.container .social .social_icon:hover {
+.social .social_icon:hover {
 	cursor: pointer;
 	opacity: 0.5;
 }
 #menu {
 }
-.pie_chart.png {
-	margin: auto;
+
+#deadliestmonth_quadrantaverage {
+	float: right;
+	width: 40%;
 }
 
-.container #deadliestmonth_quadrantaverage {
-	margin: auto;
-	width: 60%;
-}
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
-}
-.sticky + .content {
-  padding-top: 60px;
-}
 #myBtn {
     display: none; /* Hidden by default */
     position: fixed; /* Fixed/sticky position */
