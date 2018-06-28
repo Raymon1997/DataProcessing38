@@ -89,7 +89,23 @@ for i in range(len(header_dict['date'])):
     else:
         injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_injured'][i])
 
-# bepaald killed per jaar
+killed_dict = {}
+for i in range(len(header_dict['state'])):
+    if header_dict['state'][i] in killed_dict:
+        killed_dict[header_dict['state'][i]] += int(1)
+    else:
+        killed_dict[header_dict['state'][i]] = int()
+print(killed_dict)
+
+
+injured_dict = {}
+for i in range(len(header_dict['date'])):
+    if header_dict['date'][i][0:7] in injured_dict:
+        injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
+    else:
+        injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
+
+
 year_dict = {}
 for i in range(len(header_dict['date'])):
     if header_dict['date'][i][0:7] in year_dict:
