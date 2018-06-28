@@ -19,7 +19,7 @@ header_dict = {}
 index = 0
 row_list = []
 
-# Inladen eerste 500 rows van dataset
+# Inladen dataset
 ifile  = open('stage3.csv', "r")
 read = csv.reader(ifile)
 headers = next(read)
@@ -89,23 +89,23 @@ for i in range(len(header_dict['date'])):
     else:
         injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_injured'][i])
 
+# bepaal aantal incidenten per staat
 killed_dict = {}
 for i in range(len(header_dict['state'])):
     if header_dict['state'][i] in killed_dict:
         killed_dict[header_dict['state'][i]] += int(1)
     else:
         killed_dict[header_dict['state'][i]] = int()
-print(killed_dict)
 
-
+# maak dict met injured per jaar
 injured_dict = {}
 for i in range(len(header_dict['date'])):
     if header_dict['date'][i][0:7] in injured_dict:
-        injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_killed'][i])
+        injured_dict[header_dict['date'][i][0:7]] += int(header_dict['n_injured'][i])
     else:
-        injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_killed'][i])
+        injured_dict[header_dict['date'][i][0:7]] = int(header_dict['n_injured'][i])
 
-
+# maak lijst met killed per jaar
 year_dict = {}
 for i in range(len(header_dict['date'])):
     if header_dict['date'][i][0:7] in year_dict:
@@ -145,16 +145,15 @@ p.xaxis.axis_label = 'Date'
 p.yaxis.axis_label = 'Killed'
 p.ygrid.band_fill_color = "olive"
 p.ygrid.band_fill_alpha = 0.1
-
-show(p)
+# show(p)
 
 # maakt dictionary met aantal doden per state
 state_dict = {}
 for i in range(len(header_dict['state'])):
     if header_dict['state'][i] in state_dict:
-        state_dict[header_dict['state'][i]] += int(header_dict['n_killed'][i])
+        state_dict[header_dict['state'][i]] += int(header_dict['n_killed'][i]) + int(header_dict['n_injured'][i])
     else:
-        state_dict[header_dict['state'][i]] = int(header_dict['n_killed'][i])
+        state_dict[header_dict['state'][i]] = int(header_dict['n_killed'][i]) + int(header_dict['n_injured'][i])
 
 # maakt dictionary met aantal doden per city/county
 city_or_county_dict = {}
@@ -168,42 +167,7 @@ for i in range(len(header_dict['city_or_county'])):
     else:
         city_or_county_dict[header_dict['city_or_county'][i]] = int(header_dict['n_killed'][i])
 
-# maakt dictionary met aantal doden per state
-address_dict = {}
-for i in range(len(header_dict['address'])):
-    max_index = 0
-    address = list(header_dict['address'][i])
-    for index in range(len(address)):
-        if address[index].isdigit() == True:
-            max_index = index
-        else:
-            break
-    if max_index != 0:
-        max_index += 2
-    street_name = "".join(address[max_index:len(address)])
-
-    if street_name in address_dict:
-        address_dict[street_name] += int(header_dict['n_killed'][i])
-    else:
-        address_dict[street_name] = int(header_dict['n_killed'][i])
-
-max_killed_key = list(address_dict.keys())[0]
-second = list(address_dict.keys())[0]
-third = list(address_dict.keys())[0]
-for key in address_dict:
-    if int(address_dict[key]) > int(address_dict[max_killed_key]) and key != 'NA':
-        third = second
-        second = max_killed_key
-        max_killed_key = key
-# print(max_killed_key, address_dict[max_killed_key])
-# print(second, address_dict[second])
-# print(third, address_dict[third])
-
-# for i in range(len(header_dict['address'])):
-#     if header_dict['address'][i] == third:
-#         print(header_dict['city_or_county'][i])
-
-
+# Laad data in met populaties per staat
 header_dict2={}
 row_list2 = []
 index2 = 0
@@ -221,6 +185,8 @@ for header in headers:
         header_dict2[header].append(row_list2[i][index2])
     index2 += 1
 
+
+# Maak dictionary aan met als keys de staten en als values hun populatie
 pop_dict = {}
 for i in range(len(header_dict2['State'])):
     if header_dict2['State'][i] in pop_dict:
@@ -228,15 +194,15 @@ for i in range(len(header_dict2['State'])):
     else:
         pop_dict[header_dict2['State'][i]] = int(header_dict2['2018 Population'][i])
 
+# vind relatief gevaarlijkste staat
 max_state = 0
 max_pop = 1000000
 state_pop_dict = {}
 for state in state_dict:
-    state_pop_dict[state] = int(pop_dict[state]/state_dict[state])
-    if int(pop_dict[state]/state_dict[state]) < max_pop:
+    state_pop_dict[state] = float(state_dict[state]/pop_dict[state]) * 100
+    if float(state_dict[state]/pop_dict[state])*100 > max_pop:
         max_state = state
-        max_pop = int(pop_dict[state]/state_dict[state])
+        max_pop = float(state_dict[state]/pop_dict[state])*100
 
-# print(state_pop_dict)
-# print(max_state, max_pop)
-
+print(state_pop_dict)
+print(max_state, max_pop)
