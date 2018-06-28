@@ -253,8 +253,33 @@ for i in range(len(header_dict['state'])):
         if header_dict['date'][i][0:4] != '2013' and header_dict['date'][i][0:4] != '2018':
             killed_average[header_dict['state'][i]] += int(header_dict['n_killed'][i])/4
     else:
+<<<<<<< HEAD
         if header_dict['date'][i][0:4] != '2013' and header_dict['date'][i][0:4] != '2018':
             killed_average[header_dict['state'][i]] = int(header_dict['n_killed'][i])/4
 print(killed_average)
 
 # killed_change_2014
+=======
+        pop_dict[header_dict2['State'][i]] = int(header_dict2['2018 Population'][i])
+
+# vind relatief gevaarlijkste staat
+max_state = 0
+max_rate = 0
+min_state = 0
+min_rate = 1
+state_pop_dict = {}
+for state in state_dict:
+    if state == 'Hawaii':
+        continue
+    else:
+        rate = float(state_dict[state]/pop_dict[state]) * 100
+        state_pop_dict[state] = rate
+        if rate > max_rate:
+            max_state = state
+            max_rate = rate
+        if rate < min_rate:
+            min_state = state
+            min_rate = rate
+print(max_state, max_rate)
+print(min_state, min_rate)
+>>>>>>> d9bca71da4e14f49ae54dacb18c6404f6b0b50b5

@@ -37,4 +37,3 @@ pl.xlabel('Number of people killed')
 pl.ylabel('Number of people injured')
 
 pl.title('Clustering')
-    

@@ -6,7 +6,7 @@ from bokeh.sampledata.us_states import data as states
 
 from bokeh.models import FixedTicker, LogColorMapper, ColorBar, ColumnDataSource, HoverTool
 
-# Krijg de jusit data
+# Krijg de juiste data
 header_dict = {}
 row_list = []
 index = 0
@@ -40,14 +40,6 @@ for i in range(len(header_dict['state'])):
     lon.append(header_dict['state'][i])
     percentage_list.append(header_dict['Percentage 2014-2016'][i])
 
-
-# data =  {
-#     "state_list" : state_list,
-#     "percentage_list" : percentage_list,
-#     "lat" : lat,
-#     "lon" : lon
-#     }
-# source = ColumnDataSource(data=data)
 
 # maak de GeoMap
 del states["HI"]
