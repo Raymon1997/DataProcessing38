@@ -6,41 +6,8 @@ from bokeh.sampledata.us_states import data as states
 
 from bokeh.models import FixedTicker, LogColorMapper, ColorBar, ColumnDataSource, HoverTool
 
-# Krijg de juiste data
-header_dict = {}
-row_list = []
-index = 0
-
-ifile  = open('statepov.csv', "r")
-read = csv.reader(ifile)
-x = next(read)
-headers = next(read)
-row_list.append(headers)
-for i in range(49):
-    row_list.append(next(read))
-writer = csv.writer(open('extradata.csv', 'w'))
-writer.writerows(row_list)
-
-for header in headers:
-    header_dict[header] = []
-    for i in range(1, len(row_list)):
-        header_dict[header].append(row_list[i][index])
-    index += 1
-
-
-state_list = []
-percentage_list = []
-lat = []
-lon = []
-state_percentage_dict = {}
-for i in range(len(header_dict['state'])):
-    state_percentage_dict[header_dict['state'][i]] = header_dict['Percentage 2014-2016'][i]
-    state_list.append(header_dict['state'][i])
-    lat.append(header_dict['state'][i])
-    lon.append(header_dict['state'][i])
-    percentage_list.append(header_dict['Percentage 2014-2016'][i])
-
-
+relative_dict = {'Pennsylvania': 0.0581020460950177, 'California': 0.03320023239659872, 'Ohio': 0.0702115084281173, 'Colorado': 0.033936156045095506, 'North Carolina': 0.06596633022298333, 'Oklahoma': 0.06321499111411917, 'New Mexico': 0.049648253127648624, 'Louisiana': 0.1404588864645001, 'Maryland': 0.07990654651406456, 'Tennessee': 0.09291471484824912, 'Missouri':0.09323833811829682, 'Illinois': 0.1325389714543495, 'Delaware': 0.11017525072592105, 'Utah': 0.021650057211225746, 'Michigan': 0.04582042736306243, 'Georgia': 0.06175357780998219, 'Indiana':0.06812317517880467, 'Mississippi': 0.10255516237341947, 'New York': 0.03405410151545786, 'Florida': 0.05152445234330685, 'Washington': 0.028417571514013848, 'South Carolina': 0.09223968326456951, 'Arizona': 0.030741596805569087, 'Kentucky': 0.06618570232309579, 'New Jersey': 0.04105006691116624, 'Virginia': 0.05893971844994992, 'Wisconsin': 0.051202731362351886, 'Rhode Island': 0.03852268788522688, 'Texas': 0.038851281322364956, 'Alabama': 0.0997760459354352, 'Kansas': 0.05047087302960581, 'Connecticut': 0.04455673571613876, 'West Virginia': 0.05457337651137473, 'Minnesota': 0.024466246707184336, 'Nevada': 0.057248961667403814, 'Nebraska':0.046518872225232065, 'Massachusetts': 0.031511400151712964, 'Hawaii': 0.01037582209110673, 'New Hampshire': 0.017177868685559854, 'Iowa': 0.03461419568031291, 'Alaska': 0.08020941159893126, 'Arkansas': 0.07019107533720687, 'Idaho': 0.01796038452328008, 'Oregon': 0.02714568158639363, 'Wyoming': 0.021787631597294847, 'Maine': 0.018187483135581724, 'North Dakota': 0.02634930975401132, 'Montana': 0.027298485404723582, 'Vermont': 0.02083466888903135, 'South Dakota': 0.02324018273163285}
+#'District of Columbia': 0.2663414855999363
 # maak de GeoMap
 del states["HI"]
 del states["AK"]
@@ -75,8 +42,9 @@ colors = list(reversed([
 state_colors = []
 for state_id in states:
     try:
-        rate = float(state_percentage_dict[states[state_id]['name']]) - 6.9
-        idx = int(rate/0.055)
+        rate = float(relative_dict[states[state_id]['name']]) - 0.017177868685559854
+        idx = int(rate/((0.1404588864645001 - 0.017177868685559854) / 240))
+        print(0.2663414855999363/((0.2663414855999363 - 0.017177868685559854) / 240))
         state_colors.append(colors[idx])
     except KeyError:
         state_colors.append("black")
@@ -84,22 +52,15 @@ for state_id in states:
 p = figure(title="Poverty in the US", toolbar_location="left",
            plot_width=1100, plot_height=700)
 
-# hover = p.select(dict(type=HoverTool))
-# hover.names=["foo"]
-# hover.tooltips=[("State", "@state_list"), ("Percentage", "@percentage_list")]
-
 p.patches(state_xs, state_ys, fill_alpha=1, fill_color=state_colors,
           line_color="#884444", line_width=2, line_alpha=0.3)
 
-
-ticker = FixedTicker(ticks=[6.9, 20.8])
-color_mapper = LogColorMapper(palette=colors, low=6.9, high=20.8)
+ticker = FixedTicker(ticks=[0.017177868685559854, 0.1404588864645001])
+color_mapper = LogColorMapper(palette=colors, low=0.017177868685559854, high=0.1404588864645001)
 
 color_bar = ColorBar(color_mapper=color_mapper, orientation="horizontal", ticker=ticker,
                      label_standoff=12, border_line_color=None, location=(0,0))
 
 p.add_layout(color_bar, 'below')
-
 output_file("choropleth.html", title="choropleth.py example")
-
 show(p)

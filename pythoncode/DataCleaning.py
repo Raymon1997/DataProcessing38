@@ -196,13 +196,21 @@ for i in range(len(header_dict2['State'])):
 
 # vind relatief gevaarlijkste staat
 max_state = 0
-max_pop = 1000000
+max_rate = 0
+min_state = 0
+min_rate = 1
 state_pop_dict = {}
 for state in state_dict:
-    state_pop_dict[state] = float(state_dict[state]/pop_dict[state]) * 100
-    if float(state_dict[state]/pop_dict[state])*100 > max_pop:
-        max_state = state
-        max_pop = float(state_dict[state]/pop_dict[state])*100
-
-print(state_pop_dict)
-print(max_state, max_pop)
+    if state == 'Hawaii':
+        continue
+    else:
+        rate = float(state_dict[state]/pop_dict[state]) * 100
+        state_pop_dict[state] = rate
+        if rate > max_rate:
+            max_state = state
+            max_rate = rate
+        if rate < min_rate:
+            min_state = state
+            min_rate = rate
+print(max_state, max_rate)
+print(min_state, min_rate)
